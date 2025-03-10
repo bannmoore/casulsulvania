@@ -34,3 +34,12 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## Options for family tree integrations
+
+- https://balkan.app/FamilyTreeJS/Docs/GettingStarted
+- https://github.com/BALKANGraph/FamilyTreeJS
+- https://mermaid.js.org/syntax/entityRelationshipDiagram.html
+- https://gojs.net/latest/samples/genogram.html
+- https://jsfiddle.net/cyril123/0vbtvoon/22/
+- https://github.com/ErikGartner/dTree
