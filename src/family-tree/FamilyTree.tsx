@@ -3,7 +3,7 @@
 import * as d3 from "d3";
 import "./family-tree.css";
 import { useEffect, useRef } from "react";
-import { buildTree, type Node } from "../../family-tree";
+import { buildTree, type Node } from "./family-tree";
 
 const child1: Node = {
   name: "Child1",

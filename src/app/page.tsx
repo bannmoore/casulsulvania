@@ -1,12 +1,9 @@
-import FamilyTree from "./home/FamilyTree";
+import LoginForm from "./home/LoginForm";
 
 export default function Home() {
   return (
     <div className="">
-      <main className="">
-        <div id="graph"></div>
-        <FamilyTree />
-      </main>
+      <LoginForm />
     </div>
   );
 }

@@ -6,24 +6,32 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "codegen": "kysely-codegen"
   },
   "dependencies": {
     "d3": "^7.9.0",
+    "kysely": "^0.27.6",
+    "kysely-codegen": "^0.18.3",
     "next": "15.2.1",
+    "pg": "^8.14.0",
+    "postmark": "^4.0.5",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@picocss/pico": "^2.0.6",
     "@tailwindcss/postcss": "^4",
     "@types/d3": "^7.4.3",
-    "@types/lodash": "^4.17.16",
     "@types/node": "^20",
+    "@types/pg": "^8.11.11",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "15.2.1",
+    "install": "^0.13.0",
+    "npm": "^11.2.0",
     "tailwindcss": "^4",
     "typescript": "^5"
   }
