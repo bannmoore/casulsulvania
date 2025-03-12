@@ -72,6 +72,53 @@ class DatabaseClient {
       })
       .execute();
   }
+
+  async getSims() {
+    return this._db.selectFrom("sims").selectAll().execute();
+  }
+
+  async getSimById(id: string) {
+    return this._db
+      .selectFrom("sims")
+      .selectAll()
+      .where("id", "=", id)
+      .executeTakeFirst();
+  }
+
+  async insertSim({
+    firstName,
+    lastName,
+  }: {
+    firstName: string;
+    lastName: string;
+  }) {
+    this._db
+      .insertInto("sims")
+      .values({
+        first_name: firstName,
+        last_name: lastName,
+      })
+      .execute();
+  }
+
+  async updateSim({
+    id,
+    firstName,
+    lastName,
+  }: {
+    id: string;
+    firstName: string;
+    lastName: string;
+  }) {
+    this._db
+      .updateTable("sims")
+      .set({
+        first_name: firstName,
+        last_name: lastName,
+      })
+      .where("id", "=", id)
+      .execute();
+  }
 }
 
 const database = Object.freeze(
