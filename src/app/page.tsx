@@ -12,7 +12,7 @@ export default async function Home() {
           <ul>
             {sims.map((sim) => (
               <li key={sim.id}>
-                {sim.first_name} {sim.last_name}{" "}
+                {sim.firstName} {sim.lastName}{" "}
               </li>
             ))}
           </ul>

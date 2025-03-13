@@ -1,15 +1,28 @@
+import database from "@/database";
+import { cookies } from "next/headers";
 import Link from "next/link";
 
 export default async function Page() {
+  let user = null;
+  const token = (await cookies()).get("token")?.value;
+
+  if (token) {
+    user = await database.getCurrentUser(token);
+  }
+
   return (
     <>
       <h1>Admin</h1>
-      <Link role="button" href="/admin/login">
-        Login
-      </Link>{" "}
-      <Link role="button" href="/admin/sims">
-        View Sims
-      </Link>
+      {!user && (
+        <Link role="button" href="/admin/login">
+          Login
+        </Link>
+      )}
+      {user && (
+        <Link role="button" href="/admin/sims">
+          View Sims
+        </Link>
+      )}
     </>
   );
 }

@@ -10,10 +10,11 @@ export function sendEmail({
   subject: string;
   body: string;
 }) {
+  console.debug(`Sending email to: ${to}`);
   const client = new postmark.ServerClient(config.postmarkApikey);
 
   client.sendEmail({
-    From: "hello@bannmore.dev",
+    From: "hello@bannmoore.dev",
     To: to,
     Subject: subject,
     HtmlBody: body,

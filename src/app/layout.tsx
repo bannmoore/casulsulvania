@@ -3,6 +3,9 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import "@picocss/pico";
 import Link from "next/link";
+import { logout } from "./actions";
+import { cookies } from "next/headers";
+import database from "@/database";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -24,6 +27,13 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  let user = null;
+  const token = (await cookies()).get("token")?.value;
+
+  if (token) {
+    user = await database.getCurrentUser(token);
+  }
+
   return (
     <html lang="en">
       <body
@@ -31,6 +41,20 @@ export default async function RootLayout({
       >
         <header className="container m-auto flex p-4 items-center">
           <Link href="/">Casulsulvania</Link>
+          <div className="flex-1">
+            {user && (
+              <form
+                action={async () => {
+                  "use server";
+                  await logout();
+                }}
+              >
+                <button role="link" type="submit">
+                  Sign Out
+                </button>
+              </form>
+            )}
+          </div>
         </header>
         <main className="container m-auto p-4 text-center">{children}</main>
       </body>

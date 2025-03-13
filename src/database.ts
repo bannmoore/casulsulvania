@@ -1,4 +1,4 @@
-import { Kysely, PostgresDialect } from "kysely";
+import { CamelCasePlugin, Kysely, PostgresDialect } from "kysely";
 import { AgeId, DB } from "kysely-codegen";
 import { Pool } from "pg";
 import { parse } from "pg-connection-string";
@@ -35,7 +35,18 @@ class DatabaseClient {
             : undefined,
         }),
       }),
+      // Needed because we're using kysely-codgen configuration: "camelCase: true"
+      plugins: [new CamelCasePlugin()],
     });
+  }
+
+  async getCurrentUser(token: string) {
+    return this._db
+      .selectFrom("users")
+      .innerJoin("sessions", "sessions.userId", "users.id")
+      .where("sessions.token", "=", token)
+      .selectAll()
+      .executeTakeFirst();
   }
 
   async getUserByEmail(email: string) {
@@ -71,6 +82,38 @@ class DatabaseClient {
         expiresAt,
       })
       .execute();
+  }
+
+  async getUserFromOtp(otp: string) {
+    return this._db
+      .selectFrom("otps")
+      .innerJoin("users", "users.email", "otps.email")
+      .selectAll("users")
+      .where((eb) => eb("otp", "=", otp).and("expiresAt", ">", new Date()))
+      .executeTakeFirst();
+  }
+
+  async upsertSession({
+    userId,
+    token,
+    expiresAt,
+  }: {
+    userId: string;
+    token: string;
+    expiresAt: Date;
+  }) {
+    return this._db
+      .insertInto("sessions")
+      .values({
+        userId,
+        token,
+        expiresAt,
+      })
+      .executeTakeFirstOrThrow();
+  }
+
+  async deleteSession(token: string) {
+    await this._db.deleteFrom("sessions").where("token", "=", token).execute();
   }
 
   async getSims() {
