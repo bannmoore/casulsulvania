@@ -4,19 +4,6 @@ import database from "@/database";
 import { generateOtp } from "@/otp";
 import { sendEmail } from "@/postmark";
 import { addHoursToDate } from "@/util";
-import { revalidatePath } from "next/cache";
-
-export async function addSim({
-  firstName,
-  lastName,
-}: {
-  firstName: string;
-  lastName: string;
-}) {
-  await database.insertSim({ firstName, lastName });
-
-  revalidatePath("/");
-}
 
 export async function sendLoginEmail(email: string) {
   const user = await database.getUserByEmail(email);

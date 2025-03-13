@@ -1,6 +1,9 @@
 import database from "@/database";
+// import LoginForm from "./home/LoginForm";
+import AddSimForm from "./AddSimForm";
+import Link from "next/link";
 
-export default async function Home() {
+export default async function Page() {
   const sims = await database.getSims();
 
   return (
@@ -13,11 +16,14 @@ export default async function Home() {
             {sims.map((sim) => (
               <li key={sim.id}>
                 {sim.first_name} {sim.last_name}{" "}
+                <Link href={`/sims/${sim.id}`}>Edit</Link>
               </li>
             ))}
           </ul>
         )}
       </div>
+
+      <AddSimForm />
     </div>
   );
 }

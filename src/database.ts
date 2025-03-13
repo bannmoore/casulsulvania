@@ -1,5 +1,5 @@
 import { Kysely, PostgresDialect } from "kysely";
-import { DB } from "kysely-codegen";
+import { AgeId, DB } from "kysely-codegen";
 import { Pool } from "pg";
 import { parse } from "pg-connection-string";
 import { config } from "@/config";
@@ -50,7 +50,7 @@ class DatabaseClient {
     return this._db
       .selectFrom("otps")
       .selectAll()
-      .where((eb) => eb("email", "=", email).and("expires_at", ">", new Date()))
+      .where((eb) => eb("email", "=", email).and("expiresAt", ">", new Date()))
       .executeTakeFirst();
   }
 
@@ -68,7 +68,7 @@ class DatabaseClient {
       .values({
         otp,
         email,
-        expires_at: expiresAt,
+        expiresAt,
       })
       .execute();
   }
@@ -88,15 +88,18 @@ class DatabaseClient {
   async insertSim({
     firstName,
     lastName,
+    age,
   }: {
     firstName: string;
     lastName: string;
+    age: AgeId;
   }) {
     this._db
       .insertInto("sims")
       .values({
-        first_name: firstName,
-        last_name: lastName,
+        firstName,
+        lastName,
+        age: age,
       })
       .execute();
   }
@@ -113,8 +116,8 @@ class DatabaseClient {
     this._db
       .updateTable("sims")
       .set({
-        first_name: firstName,
-        last_name: lastName,
+        firstName,
+        lastName,
       })
       .where("id", "=", id)
       .execute();
