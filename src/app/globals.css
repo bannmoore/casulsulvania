@@ -39,4 +39,37 @@
   input {
     @apply outline-none focus:outline-none bg-blue-950 text-white placeholder:text-blue-200 ring-transparent border border-blue-400 transition-all ease-in disabled:opacity-50 disabled:pointer-events-none select-none px-2.5 py-2 ring shadow-sm rounded-lg duration-100 hover:border-blue-100 focus:border-blue-100;
   }
+
+  /*
+   * React Select style overrides
+   * Ref: https://react-select.com/styles#the-classnameprefix-prop
+   */
+
+   .react-select-container {
+    @apply cursor-pointer pointer-events-auto;
+   }
+
+  .react-select__control {
+    @apply outline-none focus:outline-none bg-blue-950 text-white placeholder:text-blue-200 ring-transparent border border-blue-400 transition-all ease-in disabled:opacity-50 disabled:pointer-events-none select-none px-2.5 py-2 ring shadow-sm rounded-lg duration-100 hover:border-blue-100 focus:border-blue-100;  
+    @apply cursor-pointer pointer-events-auto;
+  }
+
+  .react-select__value-container {
+    @apply cursor-pointer pointer-events-auto;
+  }
+
+  .react-select__menu {
+    @apply outline-none focus:outline-none bg-blue-950 text-white placeholder:text-blue-200 ring-transparent border border-blue-400 transition-all ease-in disabled:opacity-50 disabled:pointer-events-none select-none ring shadow-sm rounded-lg duration-100 hover:border-blue-100 focus:border-blue-100;
+    @apply mt-2;
+    @apply cursor-pointer pointer-events-auto;
+  }
+
+  .react-select__menu-list {
+    @apply cursor-pointer pointer-events-auto;
+  }
+
+  .react-select__option {
+    @apply hover:bg-blue-800 p-2 rounded-lg;
+    @apply cursor-pointer pointer-events-auto;
+  }
 }

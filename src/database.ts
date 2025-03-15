@@ -151,19 +151,42 @@ class DatabaseClient {
     id,
     firstName,
     lastName,
+    age,
   }: {
     id: string;
     firstName: string;
     lastName: string;
+    age: AgeId;
   }) {
     this._db
       .updateTable("sims")
       .set({
         firstName,
         lastName,
+        age,
       })
       .where("id", "=", id)
       .execute();
+  }
+
+  async getAges() {
+    return this._db.selectFrom("ages").selectAll().execute();
+  }
+
+  async getAspirations() {
+    return this._db.selectFrom("aspirations").selectAll().execute();
+  }
+
+  async getTraits() {
+    return this._db.selectFrom("traits").selectAll().execute();
+  }
+
+  async getCareerBranches() {
+    return this._db.selectFrom("careerBranches").selectAll().execute();
+  }
+
+  async getAllSims() {
+    return this._db.selectFrom("sims").selectAll().execute();
   }
 }
 

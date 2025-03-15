@@ -1,26 +1,32 @@
 "use client";
 
 import { ChangeEvent, FormEvent, useState } from "react";
-import { Sim } from "kysely-codegen";
+import { Age, AgeId, Sim } from "kysely-codegen";
 import { Selectable } from "kysely";
+import SingleSelect from "@/components/ux/SingleSelect";
 
 export default function AddSimForm({
   sim,
   submitFormAction,
+  ages,
 }: {
   sim: Selectable<Sim>;
   submitFormAction: ({
     id,
     firstName,
     lastName,
+    age,
   }: {
     id: string;
     firstName: string;
     lastName: string;
+    age: AgeId;
   }) => Promise<void>;
+  ages: Age[];
 }) {
   const [firstName, setFirstName] = useState(sim.firstName);
   const [lastName, setLastName] = useState(sim.lastName);
+  const [age, setAge] = useState<AgeId | undefined>(sim.age);
   const [isSuccessful, setIsSuccessful] = useState(false);
   const [error, setError] = useState("");
   const [isLoading, setLoading] = useState(false);
@@ -32,7 +38,12 @@ export default function AddSimForm({
     setIsSuccessful(false);
     setError("");
 
-    await submitFormAction({ id: sim.id, firstName, lastName })
+    if (!age) {
+      // TODO:
+      return;
+    }
+
+    await submitFormAction({ id: sim.id, firstName, lastName, age })
       .then(() => setIsSuccessful(true))
       .catch((err) => {
         // https://kentcdodds.com/blog/get-a-catch-block-error-message-with-typescript
@@ -75,6 +86,17 @@ export default function AddSimForm({
               setLastName(event.currentTarget.value)
             }
             data-1p-ignore
+          />
+        </div>
+
+        <div className="mb-4">
+          <SingleSelect
+            name="age"
+            value={age}
+            onChange={(newValue) => setAge(newValue)}
+            options={ages}
+            placeholder="Choose age"
+            isRequired={true}
           />
         </div>
 

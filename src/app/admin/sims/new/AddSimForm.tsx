@@ -1,21 +1,28 @@
 "use client";
 
+import SingleSelect from "@/components/ux/SingleSelect";
+import { Age, AgeId } from "kysely-codegen";
 import { useRouter } from "next/navigation";
 import { ChangeEvent, FormEvent, useState } from "react";
 
 export default function AddSimForm({
   submitFormAction,
+  ages,
 }: {
   submitFormAction: ({
     firstName,
     lastName,
+    age,
   }: {
     firstName: string;
     lastName: string;
+    age: AgeId;
   }) => Promise<void>;
+  ages: Age[];
 }) {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+  const [age, setAge] = useState<AgeId>();
   const [error, setError] = useState("");
   const [isLoading, setLoading] = useState(false);
 
@@ -27,7 +34,12 @@ export default function AddSimForm({
     setLoading(true);
     setError("");
 
-    await submitFormAction({ firstName, lastName })
+    if (!age) {
+      // TODO:
+      return;
+    }
+
+    await submitFormAction({ firstName, lastName, age })
       .then(() => router.push("/admin/sims"))
       .catch((err) => {
         // https://kentcdodds.com/blog/get-a-catch-block-error-message-with-typescript
@@ -67,6 +79,17 @@ export default function AddSimForm({
               setLastName(event.currentTarget.value)
             }
             data-1p-ignore
+          />
+        </div>
+
+        <div className="mb-4">
+          <SingleSelect
+            name="age"
+            value={age}
+            onChange={(newValue) => setAge(newValue)}
+            options={ages}
+            placeholder="Choose age"
+            isRequired={true}
           />
         </div>
 

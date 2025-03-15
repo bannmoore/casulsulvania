@@ -11,6 +11,7 @@ export default async function Page({
 }) {
   const id = (await params).id;
   const sim = await database.getSimById(id);
+  const ages = await database.getAges();
 
   if (!sim) {
     return notFound();
@@ -24,7 +25,7 @@ export default async function Page({
         <Link href="/admin/sims">Back</Link>
       </div>
 
-      <EditSimForm sim={sim} submitFormAction={updateSim} />
+      <EditSimForm sim={sim} submitFormAction={updateSim} ages={ages} />
     </>
   );
 }
