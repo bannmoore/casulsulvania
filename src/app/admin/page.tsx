@@ -12,7 +12,7 @@ export default async function Page() {
 
   return (
     <>
-      <h1>Admin</h1>
+      <h1 className="mb-4">Admin</h1>
       {!user && (
         <Link role="button" href="/admin/login">
           Login
@@ -20,7 +20,7 @@ export default async function Page() {
       )}
       {user && (
         <Link role="button" href="/admin/sims">
-          View Sims
+          Manage Sims
         </Link>
       )}
     </>

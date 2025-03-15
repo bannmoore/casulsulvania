@@ -1,6 +1,4 @@
 import database from "@/database";
-// import LoginForm from "./home/LoginForm";
-import AddSimForm from "./AddSimForm";
 import Link from "next/link";
 
 export default async function Page() {
@@ -9,21 +7,23 @@ export default async function Page() {
   return (
     <div>
       <div className="mb-4">
-        <h1>My Sims</h1>
+        <h1>Manage Sims</h1>
         {!sims.length && <div>None found.</div>}
         {!!sims.length && (
           <ul>
             {sims.map((sim) => (
               <li key={sim.id}>
-                {sim.first_name} {sim.last_name}{" "}
-                <Link href={`/sims/${sim.id}`}>Edit</Link>
+                {sim.firstName} {sim.lastName}{" "}
+                <Link href={`/admin/sims/${sim.id}/edit`}>Edit</Link>
               </li>
             ))}
           </ul>
         )}
       </div>
 
-      <AddSimForm />
+      <Link role="button" href="/admin/sims/new">
+        Add Sim
+      </Link>
     </div>
   );
 }

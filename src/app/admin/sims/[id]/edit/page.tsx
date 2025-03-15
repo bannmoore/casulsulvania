@@ -1,6 +1,8 @@
 import database from "@/database";
 import { notFound } from "next/navigation";
 import EditSimForm from "./EditSimForm";
+import { updateSim } from "./actions";
+import Link from "next/link";
 
 export default async function Page({
   params,
@@ -16,10 +18,13 @@ export default async function Page({
 
   return (
     <>
-      <h1>
-        Edit Sim: {sim.first_name} {sim.last_name}
-      </h1>
-      <EditSimForm sim={sim} />
+      <h1>Edit Sim</h1>
+
+      <div className="mb-4">
+        <Link href="/admin/sims">Back</Link>
+      </div>
+
+      <EditSimForm sim={sim} submitFormAction={updateSim} />
     </>
   );
 }

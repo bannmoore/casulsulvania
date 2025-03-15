@@ -1,7 +1,6 @@
 "use server";
 
 import database from "@/database";
-import { revalidatePath } from "next/cache";
 
 export async function addSim({
   firstName,
@@ -10,7 +9,5 @@ export async function addSim({
   firstName: string;
   lastName: string;
 }) {
-  await database.insertSim({ firstName, lastName });
-
-  revalidatePath("/admin/sims");
+  await database.insertSim({ firstName, lastName, age: "young_adult" });
 }

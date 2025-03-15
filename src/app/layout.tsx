@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import "@picocss/pico";
 import Link from "next/link";
 import { logout } from "./actions";
 import { cookies } from "next/headers";
@@ -43,20 +42,22 @@ export default async function RootLayout({
           <Link href="/">Casulsulvania</Link>
           <div className="flex-1">
             {user && (
-              <form
-                action={async () => {
-                  "use server";
-                  await logout();
-                }}
-              >
-                <button role="link" type="submit">
-                  Sign Out
-                </button>
-              </form>
+              <div className="flex items-center justify-end gap-4">
+                <form
+                  action={async () => {
+                    "use server";
+                    await logout();
+                  }}
+                >
+                  <button role="link" type="submit">
+                    Sign Out
+                  </button>
+                </form>
+              </div>
             )}
           </div>
         </header>
-        <main className="container m-auto p-4 text-center">{children}</main>
+        <main className="container m-auto p-4">{children}</main>
       </body>
     </html>
   );
