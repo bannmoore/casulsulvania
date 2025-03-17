@@ -9,9 +9,11 @@ export default async function Page({
   params: Promise<{ id: string }>;
 }) {
   const id = (await params).id;
-  const sim = await database.getSimById(id);
   const ages = await database.getAges();
   const lifeStates = await database.getLifeStates();
+  const aspirations = await database.getAspirations();
+  const sim = await database.getSimById(id);
+  const simAspirations = await database.getSimAspirations(id);
 
   const sims = await database.getAllSims();
 
@@ -27,7 +29,14 @@ export default async function Page({
         <Link href="/admin/sims">Back</Link>
       </div>
 
-      <EditSimForm sim={sim} ages={ages} lifeStates={lifeStates} sims={sims} />
+      <EditSimForm
+        sim={sim}
+        ages={ages}
+        lifeStates={lifeStates}
+        aspirations={aspirations}
+        sims={sims}
+        simAspirations={simAspirations}
+      />
     </>
   );
 }

@@ -2,19 +2,33 @@
 
 import { ChangeEvent, FormEvent, useState } from "react";
 import SingleSelect from "@/components/ux/SingleSelect";
-import { Age, AgeId, LifeState, LifeStateId, Sim } from "@/database";
+import {
+  Age,
+  AgeId,
+  Aspiration,
+  AspirationId,
+  LifeState,
+  LifeStateId,
+  Sim,
+  SimAspiration,
+} from "@/database";
 import { updateSim } from "./actions";
+import MultiSelect from "@/components/ux/MultiSelect";
 
 export default function AddSimForm({
-  sim,
   ages,
   lifeStates,
   sims,
+  aspirations,
+  sim,
+  simAspirations,
 }: {
-  sim: Sim;
   ages: Age[];
   lifeStates: LifeState[];
   sims: Sim[];
+  aspirations: Aspiration[];
+  sim: Sim;
+  simAspirations: SimAspiration[];
 }) {
   const [firstName, setFirstName] = useState(sim.firstName);
   const [lastName, setLastName] = useState(sim.lastName);
@@ -27,6 +41,9 @@ export default function AddSimForm({
   );
   const [parent2Id, setParent2Id] = useState<string | undefined>(
     sim.parent2Id ?? undefined
+  );
+  const [aspirationIds, setAspirationIds] = useState<AspirationId[]>(
+    simAspirations.map((val) => val.aspirationId)
   );
   const [isSuccessful, setIsSuccessful] = useState(false);
   const [error, setError] = useState("");
@@ -51,6 +68,7 @@ export default function AddSimForm({
       parent1Id,
       parent2Id,
       lifeState: lifeState || "normal",
+      aspirationIds,
     })
       .then(() => setIsSuccessful(true))
       .catch((err) => {
@@ -141,6 +159,18 @@ export default function AddSimForm({
               placeholder="Choose second parent"
             />
           </div>
+        </div>
+
+        <div className="mb-4">
+          <MultiSelect
+            name="aspirations"
+            value={aspirationIds}
+            onChange={(newValue) => setAspirationIds(newValue)}
+            options={aspirations}
+            placeholder="Choose aspirations"
+            isRequired={true}
+            isSearchable={true}
+          />
         </div>
 
         <div>

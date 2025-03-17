@@ -3,7 +3,7 @@
 import ReactSelect, { MultiValue } from "react-select";
 import ClientOnly from "../ClientOnly";
 
-type Option<T extends string> = {
+type SelectOption<T extends string> = {
   id: T;
   name: string;
 };
@@ -13,16 +13,22 @@ export default function MultiSelect<T extends string>({
   value,
   onChange,
   options,
+  placeholder = "Select...",
   isSearchable = false,
   isRequired = false,
 }: {
   name: string;
-  value: Option<T> | null;
-  onChange: (newValue: MultiValue<Option<T>>) => void;
-  options: Option<T>[];
+  value: MultiValue<T>;
+  onChange: (newValue: T[]) => void;
+  options: SelectOption<T>[];
+  placeholder?: string;
   isSearchable?: boolean;
   isRequired?: boolean;
 }) {
+  const actualValue = value
+    .map((v) => options.find((o) => o.id == v))
+    .filter((x) => !!x);
+
   return (
     <ClientOnly>
       <ReactSelect
@@ -32,9 +38,10 @@ export default function MultiSelect<T extends string>({
         isMulti={true}
         isSearchable={isSearchable}
         required={isRequired}
+        placeholder={placeholder}
         name={name}
-        value={value}
-        onChange={onChange}
+        value={actualValue}
+        onChange={(newValue) => onChange(newValue.map((v) => v.id))}
         getOptionValue={(option) => option.id}
         getOptionLabel={(option) => option.name}
         options={options}

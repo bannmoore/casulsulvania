@@ -72,4 +72,18 @@
     @apply hover:bg-blue-800 p-2 rounded-lg;
     @apply cursor-pointer pointer-events-auto;
   }
+
+  .react-select__multi-value {
+    @apply bg-blue-600 p-1 mr-2 rounded-md;
+  }
+
+  .react-select__multi-value__remove {
+    @apply bg-blue-400 ml-2 px-1 rounded-md hover:bg-blue-300;
+  }
+
+  .react-select__indicator {}
+  
+  .react-select__clear-indicator {
+    @apply ml-2 rounded-md hover:bg-blue-300 cursor-pointer;
+  }
 }

@@ -2,6 +2,7 @@ import { CamelCasePlugin, Kysely, PostgresDialect, Selectable } from "kysely";
 import {
   Ages,
   Aspirations,
+  AspirationId,
   CareerBranches,
   DB,
   LifeStates,
@@ -186,6 +187,37 @@ class DatabaseClient {
         age,
       })
       .where("id", "=", id)
+      .execute();
+  }
+
+  async getSimAspirations(simId: string): Promise<SimAspiration[]> {
+    return this._db
+      .selectFrom("simsAspirations")
+      .selectAll()
+      .where("simId", "=", simId)
+      .execute();
+  }
+
+  async clearSimAspirations(simId: string): Promise<void> {
+    await this._db
+      .deleteFrom("simsAspirations")
+      .where("simId", "=", simId)
+      .execute();
+  }
+
+  async addSimAspirations(
+    simId: string,
+    aspirationIds: AspirationId[]
+  ): Promise<void> {
+    await this._db
+      .insertInto("simsAspirations")
+      .values(
+        aspirationIds.map((aspirationId) => ({
+          simId,
+          aspirationId,
+          isComplete: false,
+        }))
+      )
       .execute();
   }
 
