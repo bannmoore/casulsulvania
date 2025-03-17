@@ -5,8 +5,8 @@ CREATE TABLE sims(
   first_name text NOT NULL,
   last_name text NOT NULL,
   name text GENERATED ALWAYS AS (first_name || ' ' || last_name) STORED NOT NULL,
-  age age_id REFERENCES ages(id) NOT NULL,
-  life_state life_State_id REFERENCES life_states(id) NOT NULL DEFAULT 'normal',
+  age_id age_id REFERENCES ages(id) NOT NULL,
+  life_state_id life_State_id REFERENCES life_states(id) NOT NULL DEFAULT 'normal',
   parent1_id bigint REFERENCES sims,
   parent2_id bigint REFERENCES sims,
   story text NOT NULL DEFAULT '',
@@ -17,6 +17,7 @@ CREATE TABLE sims(
 CREATE TABLE sims_aspirations(
   sim_id bigint REFERENCES sims(id) ON DELETE CASCADE NOT NULL,
   aspiration_id aspiration_id REFERENCES aspirations(id) NOT NULL,
+  age_id age_id REFERENCES ages(id) NOT NULL,
   is_complete boolean NOT NULL DEFAULT FALSE,
   UNIQUE (sim_id, aspiration_id)
 );
@@ -24,6 +25,7 @@ CREATE TABLE sims_aspirations(
 CREATE TABLE sims_traits(
   sim_id bigint REFERENCES sims(id) ON DELETE CASCADE NOT NULL,
   trait_id trait_id REFERENCES traits(id) NOT NULL,
+  age_id age_id REFERENCES ages(id) NOT NULL,
   UNIQUE (sim_id, trait_id)
 );
 
