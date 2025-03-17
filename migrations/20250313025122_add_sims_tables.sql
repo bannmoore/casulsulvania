@@ -4,11 +4,12 @@ CREATE TABLE sims(
   id bigserial PRIMARY KEY,
   first_name text NOT NULL,
   last_name text NOT NULL,
+  name text GENERATED ALWAYS AS (first_name || ' ' || last_name) STORED NOT NULL,
   age age_id REFERENCES ages(id) NOT NULL,
   life_state life_State_id REFERENCES life_states(id) NOT NULL DEFAULT 'normal',
   parent1_id bigint REFERENCES sims,
   parent2_id bigint REFERENCES sims,
-  story text,
+  story text NOT NULL DEFAULT '',
   created_at timestamp NOT NULL DEFAULT now(),
   updated_at timestamp NOT NULL DEFAULT now()
 );
