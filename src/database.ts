@@ -145,10 +145,6 @@ class DatabaseClient {
     await this._db.deleteFrom("sessions").where("token", "=", token).execute();
   }
 
-  async getSims(): Promise<Sim[]> {
-    return this._db.selectFrom("sims").selectAll().execute();
-  }
-
   async getSimById(id: string): Promise<Sim | undefined> {
     return this._db
       .selectFrom("sims")
@@ -157,13 +153,23 @@ class DatabaseClient {
       .executeTakeFirst();
   }
 
-  async insertSim({ firstName, lastName, age }: UnsavedSim): Promise<void> {
+  async insertSim({
+    firstName,
+    lastName,
+    age,
+    parent1Id,
+    parent2Id,
+    lifeState,
+  }: UnsavedSim): Promise<void> {
     await this._db
       .insertInto("sims")
       .values({
         firstName,
         lastName,
-        age: age,
+        age,
+        parent1Id,
+        parent2Id,
+        lifeState,
       })
       .execute();
   }

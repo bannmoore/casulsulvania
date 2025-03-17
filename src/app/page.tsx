@@ -1,7 +1,7 @@
 import database from "@/database";
 
-export default async function Home() {
-  const sims = await database.getSims();
+export default async function Page() {
+  const sims = await database.getAllSims();
 
   return (
     <div>

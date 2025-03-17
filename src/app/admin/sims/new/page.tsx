@@ -1,14 +1,14 @@
 import database from "@/database";
-import { addSim } from "./actions";
 import AddSimForm from "./AddSimForm";
 
 export default async function Page() {
   const ages = await database.getAges();
+  const sims = await database.getAllSims();
 
   return (
     <>
       <h1 className="mb-4">New Sim</h1>
-      <AddSimForm submitFormAction={addSim} ages={ages} />
+      <AddSimForm ages={ages} sims={sims} />
     </>
   );
 }

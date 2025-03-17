@@ -2,7 +2,7 @@ import database from "@/database";
 import Link from "next/link";
 
 export default async function Page() {
-  const sims = await database.getSims();
+  const sims = await database.getAllSims();
 
   return (
     <div>

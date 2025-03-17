@@ -1,28 +1,23 @@
 "use client";
 
 import SingleSelect from "@/components/ux/SingleSelect";
-import { Age, AgeId } from "@/database";
+import { Age, AgeId, Sim } from "@/database";
 import { useRouter } from "next/navigation";
 import { ChangeEvent, FormEvent, useState } from "react";
+import { addSim } from "./actions";
 
 export default function AddSimForm({
-  submitFormAction,
   ages,
+  sims,
 }: {
-  submitFormAction: ({
-    firstName,
-    lastName,
-    age,
-  }: {
-    firstName: string;
-    lastName: string;
-    age: AgeId;
-  }) => Promise<void>;
   ages: Age[];
+  sims: Sim[];
 }) {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [age, setAge] = useState<AgeId>();
+  const [parent1Id, setParent1Id] = useState<string>();
+  const [parent2Id, setParent2Id] = useState<string>();
   const [error, setError] = useState("");
   const [isLoading, setLoading] = useState(false);
 
@@ -39,7 +34,14 @@ export default function AddSimForm({
       return;
     }
 
-    await submitFormAction({ firstName, lastName, age })
+    await addSim({
+      firstName,
+      lastName,
+      age,
+      parent1Id,
+      parent2Id,
+      lifeState: "normal",
+    })
       .then(() => router.push("/admin/sims"))
       .catch((err) => {
         // https://kentcdodds.com/blog/get-a-catch-block-error-message-with-typescript
@@ -67,6 +69,7 @@ export default function AddSimForm({
             onChange={(event: ChangeEvent<HTMLInputElement>) =>
               setFirstName(event.currentTarget.value)
             }
+            className="flex-1"
             data-1p-ignore
           />
           <input
@@ -78,6 +81,7 @@ export default function AddSimForm({
             onChange={(event: ChangeEvent<HTMLInputElement>) =>
               setLastName(event.currentTarget.value)
             }
+            className="flex-1"
             data-1p-ignore
           />
         </div>
@@ -91,6 +95,28 @@ export default function AddSimForm({
             placeholder="Choose age"
             isRequired={true}
           />
+        </div>
+
+        <div className="flex gap-2 mb-4">
+          <div className="flex-1">
+            <SingleSelect
+              name="parent1Id"
+              value={parent1Id}
+              onChange={(newValue) => setParent1Id(newValue)}
+              options={sims}
+              placeholder="Choose first parent"
+            />
+          </div>
+
+          <div className="flex-1">
+            <SingleSelect
+              name="parent2Id"
+              value={parent2Id}
+              onChange={(newValue) => setParent2Id(newValue)}
+              options={sims}
+              placeholder="Choose second parent"
+            />
+          </div>
         </div>
 
         <div>
