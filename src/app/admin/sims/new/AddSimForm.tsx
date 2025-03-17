@@ -1,7 +1,7 @@
 "use client";
 
 import SingleSelect from "@/components/ux/SingleSelect";
-import { Age, AgeId } from "kysely-codegen";
+import { Age, AgeId } from "@/database";
 import { useRouter } from "next/navigation";
 import { ChangeEvent, FormEvent, useState } from "react";
 

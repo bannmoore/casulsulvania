@@ -1,16 +1,15 @@
 "use client";
 
 import { ChangeEvent, FormEvent, useState } from "react";
-import { Age, AgeId, Sim } from "kysely-codegen";
-import { Selectable } from "kysely";
 import SingleSelect from "@/components/ux/SingleSelect";
+import { Age, AgeId, Sim } from "@/database";
 
 export default function AddSimForm({
   sim,
   submitFormAction,
   ages,
 }: {
-  sim: Selectable<Sim>;
+  sim: Sim;
   submitFormAction: ({
     id,
     firstName,

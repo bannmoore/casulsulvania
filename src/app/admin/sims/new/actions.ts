@@ -12,5 +12,13 @@ export async function addSim({
   lastName: string;
   age: AgeId;
 }) {
-  await database.insertSim({ firstName, lastName, age });
+  await database.insertSim({
+    firstName,
+    lastName,
+    age,
+    lifeState: "normal",
+    parent1Id: null,
+    parent2Id: null,
+    story: "",
+  });
 }

@@ -1,7 +1,6 @@
 "use server";
 
-import database from "@/database";
-import { AgeId } from "kysely-codegen";
+import database, { AgeId } from "@/database";
 import { revalidatePath } from "next/cache";
 
 export async function updateSim({
@@ -15,7 +14,15 @@ export async function updateSim({
   lastName: string;
   age: AgeId;
 }) {
-  await database.updateSim({ id, firstName, lastName, age });
+  await database.updateSim(id, {
+    firstName,
+    lastName,
+    age,
+    lifeState: "normal",
+    parent1Id: null,
+    parent2Id: null,
+    story: "",
+  });
 
   revalidatePath(`admin/sims/${id}/edit`, "page");
 }
