@@ -15,6 +15,7 @@ import {
   SimsTraits,
   Traits,
   Users,
+  TraitId,
 } from "kysely-codegen";
 import { Pool } from "pg";
 import { parse } from "pg-connection-string";
@@ -216,6 +217,33 @@ class DatabaseClient {
           simId,
           aspirationId,
           isComplete: false,
+        }))
+      )
+      .execute();
+  }
+
+  async getSimTraits(simId: string): Promise<SimTrait[]> {
+    return this._db
+      .selectFrom("simsTraits")
+      .selectAll()
+      .where("simId", "=", simId)
+      .execute();
+  }
+
+  async clearSimTraits(simId: string): Promise<void> {
+    await this._db
+      .deleteFrom("simsTraits")
+      .where("simId", "=", simId)
+      .execute();
+  }
+
+  async addSimTraits(simId: string, traitIds: TraitId[]): Promise<void> {
+    await this._db
+      .insertInto("simsTraits")
+      .values(
+        traitIds.map((traitId) => ({
+          simId,
+          traitId,
         }))
       )
       .execute();

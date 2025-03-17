@@ -12,8 +12,10 @@ export default async function Page({
   const ages = await database.getAges();
   const lifeStates = await database.getLifeStates();
   const aspirations = await database.getAspirations();
+  const traits = await database.getTraits();
   const sim = await database.getSimById(id);
   const simAspirations = await database.getSimAspirations(id);
+  const simTraits = await database.getSimTraits(id);
 
   const sims = await database.getAllSims();
 
@@ -30,12 +32,14 @@ export default async function Page({
       </div>
 
       <EditSimForm
-        sim={sim}
+        sims={sims}
         ages={ages}
         lifeStates={lifeStates}
         aspirations={aspirations}
-        sims={sims}
+        traits={traits}
+        sim={sim}
         simAspirations={simAspirations}
+        simTraits={simTraits}
       />
     </>
   );

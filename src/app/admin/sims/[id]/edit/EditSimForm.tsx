@@ -11,6 +11,9 @@ import {
   LifeStateId,
   Sim,
   SimAspiration,
+  SimTrait,
+  Trait,
+  TraitId,
 } from "@/database";
 import { updateSim } from "./actions";
 import MultiSelect from "@/components/ux/MultiSelect";
@@ -20,15 +23,19 @@ export default function AddSimForm({
   lifeStates,
   sims,
   aspirations,
+  traits,
   sim,
   simAspirations,
+  simTraits,
 }: {
   ages: Age[];
   lifeStates: LifeState[];
   sims: Sim[];
   aspirations: Aspiration[];
+  traits: Trait[];
   sim: Sim;
   simAspirations: SimAspiration[];
+  simTraits: SimTrait[];
 }) {
   const [firstName, setFirstName] = useState(sim.firstName);
   const [lastName, setLastName] = useState(sim.lastName);
@@ -44,6 +51,9 @@ export default function AddSimForm({
   );
   const [aspirationIds, setAspirationIds] = useState<AspirationId[]>(
     simAspirations.map((val) => val.aspirationId)
+  );
+  const [traitIds, setTraitIds] = useState<TraitId[]>(
+    simTraits.map((val) => val.traitId)
   );
   const [isSuccessful, setIsSuccessful] = useState(false);
   const [error, setError] = useState("");
@@ -69,6 +79,7 @@ export default function AddSimForm({
       parent2Id,
       lifeState: lifeState || "normal",
       aspirationIds,
+      traitIds,
     })
       .then(() => setIsSuccessful(true))
       .catch((err) => {
@@ -170,6 +181,19 @@ export default function AddSimForm({
             placeholder="Choose aspirations"
             isRequired={true}
             isSearchable={true}
+          />
+        </div>
+
+        <div className="mb-4">
+          <MultiSelect
+            name="traits"
+            value={traitIds}
+            onChange={(newValue) => setTraitIds(newValue)}
+            options={traits}
+            placeholder="Choose traits"
+            isRequired={true}
+            isSearchable={true}
+            max={3}
           />
         </div>
 

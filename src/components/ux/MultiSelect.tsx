@@ -16,6 +16,7 @@ export default function MultiSelect<T extends string>({
   placeholder = "Select...",
   isSearchable = false,
   isRequired = false,
+  max,
 }: {
   name: string;
   value: MultiValue<T>;
@@ -24,6 +25,7 @@ export default function MultiSelect<T extends string>({
   placeholder?: string;
   isSearchable?: boolean;
   isRequired?: boolean;
+  max?: number;
 }) {
   const actualValue = value
     .map((v) => options.find((o) => o.id == v))
@@ -45,6 +47,7 @@ export default function MultiSelect<T extends string>({
         getOptionValue={(option) => option.id}
         getOptionLabel={(option) => option.name}
         options={options}
+        isOptionDisabled={() => !!max && actualValue.length >= max}
       />
     </ClientOnly>
   );

@@ -1,6 +1,11 @@
 "use server";
 
-import database, { AgeId, AspirationId, LifeStateId } from "@/database";
+import database, {
+  AgeId,
+  AspirationId,
+  LifeStateId,
+  TraitId,
+} from "@/database";
 import { revalidatePath } from "next/cache";
 
 export async function updateSim(
@@ -13,6 +18,7 @@ export async function updateSim(
     parent1Id,
     parent2Id,
     aspirationIds,
+    traitIds,
   }: {
     firstName: string;
     lastName: string;
@@ -21,6 +27,7 @@ export async function updateSim(
     parent1Id: string | undefined;
     parent2Id: string | undefined;
     aspirationIds: AspirationId[];
+    traitIds: TraitId[];
   }
 ) {
   await database.updateSim(id, {
@@ -35,6 +42,9 @@ export async function updateSim(
 
   await database.clearSimAspirations(id);
   await database.addSimAspirations(id, aspirationIds);
+
+  await database.clearSimTraits(id);
+  await database.addSimTraits(id, traitIds);
 
   revalidatePath(`admin/sims/${id}/edit`, "page");
 }
