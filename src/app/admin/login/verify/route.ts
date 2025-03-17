@@ -30,6 +30,8 @@ export async function GET(request: Request) {
       expiresAt,
     });
 
+    await database.deleteOtp(otp);
+
     const response = redirect("/admin");
 
     response.cookies.set("token", accessToken, {
