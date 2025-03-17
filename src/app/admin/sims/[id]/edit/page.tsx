@@ -11,6 +11,8 @@ export default async function Page({
   const id = (await params).id;
   const sim = await database.getSimById(id);
   const ages = await database.getAges();
+  const lifeStates = await database.getLifeStates();
+
   const sims = await database.getAllSims();
 
   if (!sim) {
@@ -25,7 +27,7 @@ export default async function Page({
         <Link href="/admin/sims">Back</Link>
       </div>
 
-      <EditSimForm sim={sim} ages={ages} sims={sims} />
+      <EditSimForm sim={sim} ages={ages} lifeStates={lifeStates} sims={sims} />
     </>
   );
 }

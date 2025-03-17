@@ -1,16 +1,18 @@
 "use client";
 
 import SingleSelect from "@/components/ux/SingleSelect";
-import { Age, AgeId, Sim } from "@/database";
+import { Age, AgeId, LifeState, LifeStateId, Sim } from "@/database";
 import { useRouter } from "next/navigation";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { addSim } from "./actions";
 
 export default function AddSimForm({
   ages,
+  lifeStates,
   sims,
 }: {
   ages: Age[];
+  lifeStates: LifeState[];
   sims: Sim[];
 }) {
   const [firstName, setFirstName] = useState("");
@@ -18,6 +20,7 @@ export default function AddSimForm({
   const [age, setAge] = useState<AgeId>();
   const [parent1Id, setParent1Id] = useState<string>();
   const [parent2Id, setParent2Id] = useState<string>();
+  const [lifeState, setLifeState] = useState<LifeStateId | undefined>("normal");
   const [error, setError] = useState("");
   const [isLoading, setLoading] = useState(false);
 
@@ -40,7 +43,7 @@ export default function AddSimForm({
       age,
       parent1Id,
       parent2Id,
-      lifeState: "normal",
+      lifeState: lifeState || "normal",
     })
       .then(() => router.push("/admin/sims"))
       .catch((err) => {
@@ -62,7 +65,7 @@ export default function AddSimForm({
         <div className="flex gap-2 mb-4">
           <input
             type="text"
-            id="first_name"
+            id="firstName"
             required
             placeholder="First Name"
             value={firstName}
@@ -74,7 +77,7 @@ export default function AddSimForm({
           />
           <input
             type="text"
-            id="last_name"
+            id="lastName"
             required
             placeholder="Last Name"
             value={lastName}
@@ -83,6 +86,17 @@ export default function AddSimForm({
             }
             className="flex-1"
             data-1p-ignore
+          />
+        </div>
+
+        <div className="mb-4">
+          <SingleSelect
+            name="lifeState"
+            value={lifeState}
+            onChange={(newValue) => setLifeState(newValue)}
+            options={lifeStates}
+            placeholder="Choose life state"
+            isRequired={true}
           />
         </div>
 

@@ -2,21 +2,26 @@
 
 import { ChangeEvent, FormEvent, useState } from "react";
 import SingleSelect from "@/components/ux/SingleSelect";
-import { Age, AgeId, Sim } from "@/database";
+import { Age, AgeId, LifeState, LifeStateId, Sim } from "@/database";
 import { updateSim } from "./actions";
 
 export default function AddSimForm({
   sim,
   ages,
+  lifeStates,
   sims,
 }: {
   sim: Sim;
   ages: Age[];
+  lifeStates: LifeState[];
   sims: Sim[];
 }) {
   const [firstName, setFirstName] = useState(sim.firstName);
   const [lastName, setLastName] = useState(sim.lastName);
   const [age, setAge] = useState<AgeId | undefined>(sim.age);
+  const [lifeState, setLifeState] = useState<LifeStateId | undefined>(
+    sim.lifeState
+  );
   const [parent1Id, setParent1Id] = useState<string | undefined>(
     sim.parent1Id ?? undefined
   );
@@ -45,7 +50,7 @@ export default function AddSimForm({
       age,
       parent1Id,
       parent2Id,
-      lifeState: "normal",
+      lifeState: lifeState || "normal",
     })
       .then(() => setIsSuccessful(true))
       .catch((err) => {
@@ -101,6 +106,17 @@ export default function AddSimForm({
             onChange={(newValue) => setAge(newValue)}
             options={ages}
             placeholder="Choose age"
+            isRequired={true}
+          />
+        </div>
+
+        <div className="mb-4">
+          <SingleSelect
+            name="lifeState"
+            value={lifeState}
+            onChange={(newValue) => setLifeState(newValue)}
+            options={lifeStates}
+            placeholder="Choose life state"
             isRequired={true}
           />
         </div>

@@ -193,6 +193,10 @@ class DatabaseClient {
     return this._db.selectFrom("ages").selectAll().execute();
   }
 
+  async getLifeStates(): Promise<LifeState[]> {
+    return this._db.selectFrom("lifeStates").selectAll().execute();
+  }
+
   async getAspirations(): Promise<Aspiration[]> {
     return this._db.selectFrom("aspirations").selectAll().execute();
   }
