@@ -16,14 +16,19 @@ import {
   TraitId,
 } from "@/database";
 import { updateSim } from "./actions";
-import MultiSelect from "@/components/ux/MultiSelect";
 
 export default function AddSimForm({
   ages,
   lifeStates,
   sims,
-  aspirations,
-  traits,
+  infantTraits,
+  toddlerTraits,
+  childTraits,
+  teenTraits,
+  adultTraits,
+  childAspirations,
+  teenAspirations,
+  adultAspirations,
   sim,
   simAspirations,
   simTraits,
@@ -31,17 +36,23 @@ export default function AddSimForm({
   ages: Age[];
   lifeStates: LifeState[];
   sims: Sim[];
-  aspirations: Aspiration[];
-  traits: Trait[];
+  infantTraits: Trait[];
+  toddlerTraits: Trait[];
+  childTraits: Trait[];
+  teenTraits: Trait[];
+  adultTraits: Trait[];
+  childAspirations: Aspiration[];
+  teenAspirations: Aspiration[];
+  adultAspirations: Aspiration[];
   sim: Sim;
   simAspirations: SimAspiration[];
   simTraits: SimTrait[];
 }) {
   const [firstName, setFirstName] = useState(sim.firstName);
   const [lastName, setLastName] = useState(sim.lastName);
-  const [age, setAge] = useState<AgeId | undefined>(sim.age);
-  const [lifeState, setLifeState] = useState<LifeStateId | undefined>(
-    sim.lifeState
+  const [ageId, setAgeId] = useState<AgeId | undefined>(sim.ageId);
+  const [lifeStateId, setLifeStateId] = useState<LifeStateId | undefined>(
+    sim.lifeStateId
   );
   const [parent1Id, setParent1Id] = useState<string | undefined>(
     sim.parent1Id ?? undefined
@@ -49,12 +60,50 @@ export default function AddSimForm({
   const [parent2Id, setParent2Id] = useState<string | undefined>(
     sim.parent2Id ?? undefined
   );
-  const [aspirationIds, setAspirationIds] = useState<AspirationId[]>(
-    simAspirations.map((val) => val.aspirationId)
+
+  /* traits */
+
+  const [infantTraitId, setInfantTraitId] = useState<TraitId | undefined>(
+    simTraits.find((trait) => trait.ageId === "infant")?.traitId
   );
-  const [traitIds, setTraitIds] = useState<TraitId[]>(
-    simTraits.map((val) => val.traitId)
+  const [toddlerTraitId, setToddlerTraitId] = useState<TraitId | undefined>(
+    simTraits.find((trait) => trait.ageId === "toddler")?.traitId
   );
+  const [childTraitId, setChildTraitId] = useState<TraitId | undefined>(
+    simTraits.find((trait) => trait.ageId === "child")?.traitId
+  );
+  const [teenTraitId, setTeenTraitId] = useState<TraitId | undefined>(
+    simTraits.find((trait) => trait.ageId === "teen")?.traitId
+  );
+  const [adultTraitId, setAdultTraitId] = useState<TraitId | undefined>(
+    simTraits.find((trait) => trait.ageId === "adult")?.traitId
+  );
+
+  /* aspirations */
+
+  const [childAspirationId, setChildAspirationId] = useState<
+    AspirationId | undefined
+  >(
+    simAspirations.find((aspiration) => aspiration.ageId === "child")
+      ?.aspirationId
+  );
+
+  const [teenAspirationId, setTeenAspirationId] = useState<
+    AspirationId | undefined
+  >(
+    simAspirations.find((aspiration) => aspiration.ageId === "teen")
+      ?.aspirationId
+  );
+
+  const [adultAspirationId, setAdultAspirationId] = useState<
+    AspirationId | undefined
+  >(
+    simAspirations.find((aspiration) => aspiration.ageId === "young_adult")
+      ?.aspirationId
+  );
+
+  /* form state */
+
   const [isSuccessful, setIsSuccessful] = useState(false);
   const [error, setError] = useState("");
   const [isLoading, setLoading] = useState(false);
@@ -66,20 +115,40 @@ export default function AddSimForm({
     setIsSuccessful(false);
     setError("");
 
-    if (!age) {
-      // TODO:
+    // TODO
+    if (!ageId || !lifeStateId) {
       return;
     }
 
     await updateSim(sim.id, {
       firstName,
       lastName,
-      age,
+      ageId,
       parent1Id,
       parent2Id,
-      lifeState: lifeState || "normal",
-      aspirationIds,
-      traitIds,
+      lifeStateId,
+      aspirations: new Array<
+        { ageId: AgeId; aspirationId: AspirationId } | undefined
+      >(
+        childAspirationId && {
+          ageId: "child",
+          aspirationId: childAspirationId,
+        },
+        teenAspirationId && {
+          ageId: "teen",
+          aspirationId: teenAspirationId,
+        },
+        adultAspirationId && {
+          ageId: "young_adult",
+          aspirationId: adultAspirationId,
+        }
+      ).filter((x) => !!x),
+      traits: new Array<{ ageId: AgeId; traitId: TraitId } | undefined>(
+        infantTraitId && { ageId: "infant", traitId: infantTraitId },
+        childTraitId && { ageId: "child", traitId: childTraitId },
+        teenTraitId && { ageId: "teen", traitId: teenTraitId },
+        adultTraitId && { ageId: "young_adult", traitId: adultTraitId }
+      ).filter((x) => !!x),
     })
       .then(() => setIsSuccessful(true))
       .catch((err) => {
@@ -95,6 +164,8 @@ export default function AddSimForm({
 
   return (
     <>
+      <h2 className="mb-2">Basic Info</h2>
+
       {isSuccessful && (
         <div className="alert alert-success mb-4">Updated successfully.</div>
       )}
@@ -131,8 +202,8 @@ export default function AddSimForm({
         <div className="mb-4">
           <SingleSelect
             name="age"
-            value={age}
-            onChange={(newValue) => setAge(newValue)}
+            value={ageId}
+            onChange={(newValue) => setAgeId(newValue)}
             options={ages}
             placeholder="Choose age"
             isRequired={true}
@@ -142,8 +213,8 @@ export default function AddSimForm({
         <div className="mb-4">
           <SingleSelect
             name="lifeState"
-            value={lifeState}
-            onChange={(newValue) => setLifeState(newValue)}
+            value={lifeStateId}
+            onChange={(newValue) => setLifeStateId(newValue)}
             options={lifeStates}
             placeholder="Choose life state"
             isRequired={true}
@@ -172,28 +243,113 @@ export default function AddSimForm({
           </div>
         </div>
 
+        <h2 className="mb-2">Life Stages</h2>
+
+        {/* INFANT */}
+
+        <h3 className="mb-4">Infant</h3>
+
         <div className="mb-4">
-          <MultiSelect
-            name="aspirations"
-            value={aspirationIds}
-            onChange={(newValue) => setAspirationIds(newValue)}
-            options={aspirations}
-            placeholder="Choose aspirations"
-            isRequired={true}
+          <SingleSelect
+            name="infantTrait"
+            value={infantTraitId}
+            onChange={(newValue) => setInfantTraitId(newValue)}
+            options={infantTraits}
+            placeholder="Choose infant trait"
+            isSearchable={true}
+          />
+        </div>
+
+        {/* TODDLER */}
+
+        <h3 className="mb-4">Toddler</h3>
+
+        <div className="mb-4">
+          <SingleSelect
+            name="toddlerTrait"
+            value={toddlerTraitId}
+            onChange={(newValue) => setToddlerTraitId(newValue)}
+            options={toddlerTraits}
+            placeholder="Choose toddler trait"
+            isSearchable={true}
+          />
+        </div>
+
+        {/* Child */}
+
+        <h3 className="mb-4">Child</h3>
+
+        <div className="mb-4">
+          <SingleSelect
+            name="childTrait"
+            value={childTraitId}
+            onChange={(newValue) => setChildTraitId(newValue)}
+            options={childTraits}
+            placeholder="Choose child trait"
             isSearchable={true}
           />
         </div>
 
         <div className="mb-4">
-          <MultiSelect
-            name="traits"
-            value={traitIds}
-            onChange={(newValue) => setTraitIds(newValue)}
-            options={traits}
-            placeholder="Choose traits"
-            isRequired={true}
+          <SingleSelect
+            name="childAspiration"
+            value={childAspirationId}
+            onChange={(newValue) => setChildAspirationId(newValue)}
+            options={childAspirations}
+            placeholder="Choose child aspiration"
             isSearchable={true}
-            max={3}
+          />
+        </div>
+
+        {/* Teen */}
+
+        <h3 className="mb-4">Teen</h3>
+
+        <div className="mb-4">
+          <SingleSelect
+            name="teenTrait"
+            value={teenTraitId}
+            onChange={(newValue) => setTeenTraitId(newValue)}
+            options={teenTraits}
+            placeholder="Choose teen trait"
+            isSearchable={true}
+          />
+        </div>
+
+        <div className="mb-4">
+          <SingleSelect
+            name="teenAspiration"
+            value={teenAspirationId}
+            onChange={(newValue) => setTeenAspirationId(newValue)}
+            options={teenAspirations}
+            placeholder="Choose teen aspiration"
+            isSearchable={true}
+          />
+        </div>
+
+        {/* Adult */}
+
+        <h3 className="mb-4">Adult</h3>
+
+        <div className="mb-4">
+          <SingleSelect
+            name="adultTrait"
+            value={adultTraitId}
+            onChange={(newValue) => setAdultTraitId(newValue)}
+            options={adultTraits}
+            placeholder="Choose adult trait"
+            isSearchable={true}
+          />
+        </div>
+
+        <div className="mb-4">
+          <SingleSelect
+            name="adultAspiration"
+            value={adultAspirationId}
+            onChange={(newValue) => setAdultAspirationId(newValue)}
+            options={adultAspirations}
+            placeholder="Choose adult aspiration"
+            isSearchable={true}
           />
         </div>
 

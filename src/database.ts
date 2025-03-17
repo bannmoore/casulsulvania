@@ -15,7 +15,9 @@ import {
   SimsTraits,
   Traits,
   Users,
+  AgeId,
   TraitId,
+  AspirationCategory,
 } from "kysely-codegen";
 import { Pool } from "pg";
 import { parse } from "pg-connection-string";
@@ -158,34 +160,34 @@ class DatabaseClient {
   async insertSim({
     firstName,
     lastName,
-    age,
+    ageId,
     parent1Id,
     parent2Id,
-    lifeState,
+    lifeStateId,
   }: UnsavedSim): Promise<void> {
     await this._db
       .insertInto("sims")
       .values({
         firstName,
         lastName,
-        age,
+        ageId,
         parent1Id,
         parent2Id,
-        lifeState,
+        lifeStateId,
       })
       .execute();
   }
 
   async updateSim(
     id: string,
-    { firstName, lastName, age }: UnsavedSim
+    { firstName, lastName, ageId }: UnsavedSim
   ): Promise<void> {
     await this._db
       .updateTable("sims")
       .set({
         firstName,
         lastName,
-        age,
+        ageId,
       })
       .where("id", "=", id)
       .execute();
@@ -206,16 +208,21 @@ class DatabaseClient {
       .execute();
   }
 
-  async addSimAspirations(
+  async insertSimAspirations(
     simId: string,
-    aspirationIds: AspirationId[]
+    aspirations: { aspirationId: AspirationId; ageId: AgeId }[]
   ): Promise<void> {
+    if (!aspirations.length) {
+      return;
+    }
+
     await this._db
       .insertInto("simsAspirations")
       .values(
-        aspirationIds.map((aspirationId) => ({
+        aspirations.map(({ aspirationId, ageId }) => ({
           simId,
           aspirationId,
+          ageId,
           isComplete: false,
         }))
       )
@@ -237,13 +244,21 @@ class DatabaseClient {
       .execute();
   }
 
-  async addSimTraits(simId: string, traitIds: TraitId[]): Promise<void> {
+  async insertSimTraits(
+    simId: string,
+    traits: { traitId: TraitId; ageId: AgeId }[]
+  ): Promise<void> {
+    if (!traits.length) {
+      return;
+    }
+
     await this._db
       .insertInto("simsTraits")
       .values(
-        traitIds.map((traitId) => ({
+        traits.map(({ traitId, ageId }) => ({
           simId,
           traitId,
+          ageId,
         }))
       )
       .execute();
@@ -257,12 +272,39 @@ class DatabaseClient {
     return this._db.selectFrom("lifeStates").selectAll().execute();
   }
 
-  async getAspirations(): Promise<Aspiration[]> {
-    return this._db.selectFrom("aspirations").selectAll().execute();
+  async getAspirations(age: AgeId): Promise<Aspiration[]> {
+    return (
+      this._db
+        .selectFrom("aspirations")
+        .selectAll()
+        // @ts-expect-error: https://github.com/kysely-org/kysely/pull/612
+        .where((eb) => eb(eb.val(age), "=", eb.fn.any("aspirations.ages")))
+        .orderBy("name asc")
+        .execute()
+    );
   }
 
-  async getTraits(): Promise<Trait[]> {
-    return this._db.selectFrom("traits").selectAll().execute();
+  async getAspirationsByCategory(
+    category: AspirationCategory
+  ): Promise<Aspiration[]> {
+    return this._db
+      .selectFrom("aspirations")
+      .selectAll()
+      .where("category", "=", category)
+      .orderBy("name asc")
+      .execute();
+  }
+
+  async getTraits(age: AgeId): Promise<Trait[]> {
+    return (
+      this._db
+        .selectFrom("traits")
+        .selectAll()
+        // @ts-expect-error: https://github.com/kysely-org/kysely/pull/612
+        .where((eb) => eb(eb.val(age), "=", eb.fn.any("traits.ages")))
+        .orderBy("name asc")
+        .execute()
+    );
   }
 
   async getCareerBranches(): Promise<CareerBranch[]> {

@@ -17,10 +17,12 @@ export default function AddSimForm({
 }) {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [age, setAge] = useState<AgeId>();
+  const [ageId, setAgeId] = useState<AgeId>();
   const [parent1Id, setParent1Id] = useState<string>();
   const [parent2Id, setParent2Id] = useState<string>();
-  const [lifeState, setLifeState] = useState<LifeStateId | undefined>("normal");
+  const [lifeStateId, setLifeStateId] = useState<LifeStateId | undefined>(
+    "normal"
+  );
   const [error, setError] = useState("");
   const [isLoading, setLoading] = useState(false);
 
@@ -32,18 +34,18 @@ export default function AddSimForm({
     setLoading(true);
     setError("");
 
-    if (!age) {
-      // TODO:
+    // TODO
+    if (!ageId || !lifeStateId) {
       return;
     }
 
     await addSim({
       firstName,
       lastName,
-      age,
+      ageId,
       parent1Id,
       parent2Id,
-      lifeState: lifeState || "normal",
+      lifeStateId,
     })
       .then(() => router.push("/admin/sims"))
       .catch((err) => {
@@ -92,8 +94,8 @@ export default function AddSimForm({
         <div className="mb-4">
           <SingleSelect
             name="lifeState"
-            value={lifeState}
-            onChange={(newValue) => setLifeState(newValue)}
+            value={lifeStateId}
+            onChange={(newValue) => setLifeStateId(newValue)}
             options={lifeStates}
             placeholder="Choose life state"
             isRequired={true}
@@ -103,8 +105,8 @@ export default function AddSimForm({
         <div className="mb-4">
           <SingleSelect
             name="age"
-            value={age}
-            onChange={(newValue) => setAge(newValue)}
+            value={ageId}
+            onChange={(newValue) => setAgeId(newValue)}
             options={ages}
             placeholder="Choose age"
             isRequired={true}

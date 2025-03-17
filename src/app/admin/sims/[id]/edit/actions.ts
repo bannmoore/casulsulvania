@@ -13,38 +13,39 @@ export async function updateSim(
   {
     firstName,
     lastName,
-    age,
-    lifeState,
+    ageId,
+    lifeStateId,
     parent1Id,
     parent2Id,
-    aspirationIds,
-    traitIds,
+    aspirations,
+    traits,
   }: {
     firstName: string;
     lastName: string;
-    age: AgeId;
-    lifeState: LifeStateId;
+    ageId: AgeId;
+    lifeStateId: LifeStateId;
     parent1Id: string | undefined;
     parent2Id: string | undefined;
-    aspirationIds: AspirationId[];
-    traitIds: TraitId[];
+    aspirations: { aspirationId: AspirationId; ageId: AgeId }[];
+    traits: { traitId: TraitId; ageId: AgeId }[];
   }
 ) {
   await database.updateSim(id, {
     firstName,
     lastName,
-    age,
-    lifeState,
+    ageId,
+    lifeStateId,
     parent1Id: parent1Id ?? null,
     parent2Id: parent2Id ?? null,
     story: "",
+    isDeceased: false,
   });
 
   await database.clearSimAspirations(id);
-  await database.addSimAspirations(id, aspirationIds);
+  await database.insertSimAspirations(id, aspirations);
 
   await database.clearSimTraits(id);
-  await database.addSimTraits(id, traitIds);
+  await database.insertSimTraits(id, traits);
 
   revalidatePath(`admin/sims/${id}/edit`, "page");
 }

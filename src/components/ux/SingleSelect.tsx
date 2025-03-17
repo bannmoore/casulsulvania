@@ -35,7 +35,7 @@ export default function SingleSelect<T extends string>({
         classNamePrefix="react-select"
         isMulti={false}
         isSearchable={isSearchable}
-        isClearable={false}
+        isClearable={!isRequired}
         required={isRequired}
         placeholder={placeholder}
         name={name}
