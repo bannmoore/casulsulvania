@@ -15,6 +15,12 @@ variable "do_token" {
   sensitive   = true
 }
 
+variable "jump_server_ssh_key" {
+  description = "The public SSH key used to access the Jump Server"
+  type        = string
+  sensitive   = true
+}
+
 variable "jump_server_ssh_key_path" {
   description = "Path to the public SSH key used to access the Jump Server"
   type        = string

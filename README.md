@@ -58,7 +58,7 @@ This Terraform configuration expects the following resources to already exist:
 ./bin/jump/connect.sh
 
 # On jump server, generate ssh key.
-ssh-keygen -t rsa
+ssh-keygen -t rsa -C "<EMAIL>"
 cat ~/.ssh/id_rsa.pub
 # (copy the public key and add it to GitHub)
 
