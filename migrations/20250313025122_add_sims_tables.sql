@@ -10,6 +10,7 @@ CREATE TABLE sims(
   parent1_id bigint REFERENCES sims,
   parent2_id bigint REFERENCES sims,
   story text NOT NULL DEFAULT '',
+  is_deceased boolean NOT NULL DEFAULT FALSE,
   created_at timestamp NOT NULL DEFAULT now(),
   updated_at timestamp NOT NULL DEFAULT now()
 );
