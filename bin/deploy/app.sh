@@ -9,7 +9,7 @@ IFS=$'\n\t'
   doctl registry login --expiry-seconds 86400
 
   docker compose build app
-  docker push registry.digitalocean.com/bam/roleplay-realm-archive
+  docker push registry.digitalocean.com/bam/casulsulvania
 
   doctl registry logout
 )

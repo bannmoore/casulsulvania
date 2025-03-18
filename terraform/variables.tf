@@ -25,3 +25,9 @@ variable "jump_server_volume_name" {
   type    = string
   default = "cas-jump-server-volume"
 }
+
+variable "postmark_apikey" {
+  description = "Postmark Apikey"
+  type        = string
+  sensitive   = true
+}

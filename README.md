@@ -63,7 +63,7 @@ cat ~/.ssh/id_rsa.pub
 # (copy the public key and add it to GitHub)
 
 # Clone database repo
-cd /mnt/rra_jump_server_volume
+cd /mnt/cas_jump_server_volume
 git clone git@github.com:bannmoore/casulsulvania-db.git
 cd casulsulvania-db
 
@@ -78,7 +78,7 @@ To run new migrations:
 ```sh
 ./bin/jump/connect.sh
 
-cd /mnt/rra_jump_server_volume/casulsulvania-db
+cd /mnt/cas_jump_server_volume/casulsulvania-db
 git pull
 source ../.env
 ./bin/migrate.sh

@@ -4,5 +4,11 @@ resource "digitalocean_project" "cas_project" {
   description = "Casulsulvania"
   environment = "development"
   purpose     = "Web Application"
-  resources   = []
+  resources = [
+    digitalocean_app.cas_app.urn,
+    digitalocean_database_cluster.cas_postgres.urn,
+    digitalocean_droplet.cas_jump_server.urn,
+    digitalocean_volume.cas_jump_server_volume.urn,
+    digitalocean_domain.casulsulvania_com.urn
+  ]
 }
