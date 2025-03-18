@@ -18,7 +18,7 @@ import {
   AgeId,
   TraitId,
   AspirationCategory,
-} from "kysely-codegen";
+} from "./db";
 import { Pool } from "pg";
 import { parse } from "pg-connection-string";
 import { config } from "@/config";

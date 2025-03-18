@@ -12,7 +12,6 @@
   "dependencies": {
     "d3": "^7.9.0",
     "kysely": "^0.27.6",
-    "kysely-codegen": "^0.18.3",
     "next": "15.2.1",
     "pg": "^8.14.0",
     "postmark": "^4.0.5",
@@ -32,6 +31,7 @@
     "eslint": "^9",
     "eslint-config-next": "15.2.1",
     "install": "^0.13.0",
+    "kysely-codegen": "^0.18.3",
     "npm": "^11.2.0",
     "tailwindcss": "^4",
     "typescript": "^5"

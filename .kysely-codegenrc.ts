@@ -9,7 +9,7 @@ const config = {
   includePattern: null,
   logLevel: "warn",
   numericParser: "string",
-  outFile: "./node_modules/kysely-codegen/dist/db.d.ts",
+  outFile: "./src/db.d.ts",
   partitions: false,
   print: false,
   runtimeEnums: false,
