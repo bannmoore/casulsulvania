@@ -1,1 +1,2 @@
 brew "goose"
+brew "libpq"

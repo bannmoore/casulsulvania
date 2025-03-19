@@ -28,3 +28,11 @@ Create migration:
 ```sh
 ./bin/migrate create new_migration_name sql
 ```
+
+## Populating local from cas_db.dump
+
+See `casulsulvania-infra` for instructions on generating a `.dump` file from the remote database. Copy that file into this repository. Then, while the local database is running:
+
+```sh
+./bin/pgrestore.sh
+```
