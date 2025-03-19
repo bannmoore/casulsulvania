@@ -41,9 +41,12 @@ This Terraform configuration expects the following resources to already exist:
 
 #### Deploy DigitalOcean infrastructure
 
-```sh
-./bin/terraform.sh plan
+Before deploying, be sure to copy `terraform.tfvars.template` to `terraform.tfvars` in the same directory, and fill out the sensitive values.
 
+```sh
+./bin/terraform.sh login
+
+./bin/terraform.sh plan
 ./bin/deploy/infra.sh
 
 # ONLY DO THIS IF YOU WANT TO BLOW EVERYTHING UP
