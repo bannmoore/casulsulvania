@@ -76,7 +76,7 @@ export default function AddSimForm({
     simTraits.find((trait) => trait.ageId === "teen")?.traitId
   );
   const [adultTraitId, setAdultTraitId] = useState<TraitId | undefined>(
-    simTraits.find((trait) => trait.ageId === "adult")?.traitId
+    simTraits.find((trait) => trait.ageId === "young_adult")?.traitId
   );
 
   /* aspirations */
@@ -145,6 +145,7 @@ export default function AddSimForm({
       ).filter((x) => !!x),
       traits: new Array<{ ageId: AgeId; traitId: TraitId } | undefined>(
         infantTraitId && { ageId: "infant", traitId: infantTraitId },
+        toddlerTraitId && { ageId: "toddler", traitId: toddlerTraitId },
         childTraitId && { ageId: "child", traitId: childTraitId },
         teenTraitId && { ageId: "teen", traitId: teenTraitId },
         adultTraitId && { ageId: "young_adult", traitId: adultTraitId }
