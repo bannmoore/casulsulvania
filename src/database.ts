@@ -18,6 +18,7 @@ import {
   AgeId,
   TraitId,
   AspirationCategory,
+  LifeStateId,
 } from "./db";
 import { Pool } from "pg";
 import { parse } from "pg-connection-string";
@@ -47,7 +48,6 @@ export type Trait = Selectable<Traits>;
 export type User = Selectable<Users>;
 
 type Unsaved<T> = Omit<T, "id" | "createdAt" | "updatedAt">;
-type UnsavedSim = Omit<Unsaved<Sim>, "name">;
 
 class DatabaseClient {
   private _db: Kysely<DB>;
@@ -157,37 +157,26 @@ class DatabaseClient {
       .executeTakeFirst();
   }
 
-  async insertSim({
-    firstName,
-    lastName,
-    ageId,
-    parent1Id,
-    parent2Id,
-    lifeStateId,
-  }: UnsavedSim): Promise<void> {
-    await this._db
-      .insertInto("sims")
-      .values({
-        firstName,
-        lastName,
-        ageId,
-        parent1Id,
-        parent2Id,
-        lifeStateId,
-      })
-      .execute();
+  async insertSim(insertData: {
+    firstName: string;
+    lastName: string;
+    ageId: AgeId;
+    lifeStateId: LifeStateId;
+    parent1Id: string | null;
+    parent2Id: string | null;
+  }): Promise<void> {
+    await this._db.insertInto("sims").values(insertData).execute();
   }
 
   async updateSim(
     id: string,
-    { firstName, lastName, ageId }: UnsavedSim
+    updateData: Partial<Unsaved<Sim>>
   ): Promise<void> {
     await this._db
       .updateTable("sims")
       .set({
-        firstName,
-        lastName,
-        ageId,
+        ...updateData,
+        updatedAt: new Date(),
       })
       .where("id", "=", id)
       .execute();

@@ -14,8 +14,8 @@ export async function addSim({
   lastName: string;
   ageId: AgeId;
   lifeStateId: LifeStateId;
-  parent1Id: string | undefined;
-  parent2Id: string | undefined;
+  parent1Id?: string;
+  parent2Id?: string;
 }) {
   await database.insertSim({
     firstName,
@@ -24,7 +24,5 @@ export async function addSim({
     lifeStateId,
     parent1Id: parent1Id ?? null,
     parent2Id: parent2Id ?? null,
-    story: "",
-    isDeceased: false,
   });
 }

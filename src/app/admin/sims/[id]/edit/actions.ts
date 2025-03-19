@@ -37,8 +37,6 @@ export async function updateSim(
     lifeStateId,
     parent1Id: parent1Id ?? null,
     parent2Id: parent2Id ?? null,
-    story: "",
-    isDeceased: false,
   });
 
   await database.clearSimAspirations(id);
