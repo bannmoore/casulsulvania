@@ -425,7 +425,7 @@ INSERT INTO aspirations(id, category, ages, product, name, description)
 ('master_mixologist', 'food', ARRAY['teen', 'young_adult', 'adult', 'elder']::age_id[], 'base', 'Master Mixologist', 'This Sim wants to know everything there is to know about Mixology!'),
 ('expert_nectar_maker', 'food', ARRAY['teen', 'young_adult', 'adult', 'elder']::age_id[], 'horse_ranch', 'Expert Nectar Maker', 'This Sim wants to master the art of Nectar Making, honing their abilities to consistently craft only the best Nectars. They also want to make an absurd amount of Simoleons doing it.'),
 ('appliance_whiz', 'food', ARRAY['teen', 'young_adult', 'adult', 'elder']::age_id[], 'home_chef_hustle', 'Appliance Wiz', 'This Sim knows their way around the small kitchen appliances!'),
-('grilled_cheese', 'food', ARRAY['teen', 'young_adult', 'adult', 'elder']::age_id[], 'base', 'Grilled Cheese', 'TBD'),
+('grilled_cheese', 'food', ARRAY['teen', 'young_adult', 'adult', 'elder']::age_id[], 'base', 'Grilled Cheese', 'This Sim wants to eat, discuss, sleep, dream, and live grilled cheese sandwiches.'),
                 -- Fortune
 ('fabulously_wealthy', 'fortune', ARRAY['teen', 'young_adult', 'adult', 'elder']::age_id[], 'base', 'Fabulously Wealthy', 'This Sim wants to get rich and have a successful career!'),
 ('mansion_baron', 'fortune', ARRAY['teen', 'young_adult', 'adult', 'elder']::age_id[], 'base', 'Mansion Baron', 'This Sim is all about owning the biggest, fanciest home!'),
