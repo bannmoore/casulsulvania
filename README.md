@@ -84,6 +84,14 @@ source ../.env
 ./bin/migrate.sh
 ```
 
+### Dump Remote Database
+
+This will produce a local `.dump` file, which can be copied into the `casulsulvania-db` repo to restore locally.
+
+```sh
+./bin/jump/connect_and_dump.sh
+```
+
 ## Gotchas
 
 ### DigitalOcean expects the amd64 platform

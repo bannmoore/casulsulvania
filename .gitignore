@@ -10,3 +10,4 @@ id_rsa
 .env.local
 .env.jump
 _local_data
+*.dump
