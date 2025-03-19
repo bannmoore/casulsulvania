@@ -243,6 +243,7 @@ CREATE TYPE aspiration_id AS ENUM(
         -- Child
         'child_artistic_prodigy',
         'child_rambunctious_scamp',
+        'child_social_butterfly',
         'child_whiz_kid',
         'child_slumber_party_animal',
         'child_mind_and_body',
@@ -386,6 +387,7 @@ INSERT INTO aspirations(id, category, ages, product, name, description)
                 -- Child
 ('child_artistic_prodigy', 'child', ARRAY['child']::age_id[], 'base', 'Artistic Prodigy', 'This Sim has dreams of succeeding in the arts!'),
 ('child_rambunctious_scamp', 'child', ARRAY['child']::age_id[], 'base', 'Rambunctious Scamp', 'This Sim wants to be playful and nimble!'),
+('child_social_butterfly', 'child', ARRAY['child']::age_id[], 'base', 'Social Butterfly', 'This Sim wants to talk to everyone and make friends!'),
 ('child_whiz_kid', 'child', ARRAY['child']::age_id[], 'base', 'Whiz Kid', 'This Sim wants to be the smartest kid in school!'),
 ('child_slumber_party_animal', 'child', ARRAY['child']::age_id[], 'growing_together', 'Slumber Party Animal', 'This Sim wants to be the life of the party - in a uniquely creative way!'),
 ('child_mind_and_body', 'child', ARRAY['child']::age_id[], 'growing_together', 'Mind and Body', 'This Sim wants to master both their mind and body!'),
