@@ -32,7 +32,7 @@ export type {
   ProductId,
   ProductType,
   TraitId,
-} from "kysely-codegen";
+} from "./db";
 export type Age = Selectable<Ages>;
 export type Aspiration = Selectable<Aspirations>;
 export type CareerBranch = Selectable<CareerBranches>;
