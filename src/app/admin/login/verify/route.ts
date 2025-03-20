@@ -1,6 +1,6 @@
 import database from "@/database";
 import { config } from "@/config";
-import { redirect } from "@/util";
+import { redirectWithBaseUrl } from "@/util/next";
 import { generateAccessToken } from "@/otp";
 
 export async function GET(request: Request) {
@@ -32,7 +32,7 @@ export async function GET(request: Request) {
 
     await database.deleteOtp(otp);
 
-    const response = redirect("/admin/login/success");
+    const response = redirectWithBaseUrl("/admin/login/success");
 
     response.cookies.set("token", accessToken, {
       httpOnly: true,
@@ -50,6 +50,6 @@ export async function GET(request: Request) {
     let message = "Unknown Error";
     if (err instanceof Error) message = err.message;
 
-    return redirect(`/admin/login/error?description=${message}`);
+    return redirectWithBaseUrl(`/admin/login/error?description=${message}`);
   }
 }

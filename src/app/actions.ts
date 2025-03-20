@@ -1,7 +1,7 @@
 "use server";
 
 import database from "@/database";
-import { redirect } from "@/util";
+import { redirectWithBaseUrl } from "@/util/next";
 import { cookies } from "next/headers";
 
 export async function logout() {
@@ -12,7 +12,7 @@ export async function logout() {
     (await cookies()).delete("token");
   }
 
-  redirect("/admin");
+  redirectWithBaseUrl("/admin");
 
   return;
 }

@@ -1,9 +1,10 @@
+import { redirectWithBaseUrl } from "@/util/next";
 import { cookies } from "next/headers";
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 
-export async function adminMiddleware(request: NextRequest) {
+export async function adminMiddleware(_request: NextRequest) {
   const token = (await cookies()).get("token")?.value;
   if (!token) {
-    return NextResponse.redirect(new URL("/admin/login", request.nextUrl));
+    return redirectWithBaseUrl("/admin/login");
   }
 }
