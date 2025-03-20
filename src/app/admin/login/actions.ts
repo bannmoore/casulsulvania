@@ -27,11 +27,15 @@ export async function sendLoginEmail(email: string) {
     expiresAt: addHoursToDate(new Date(), 1),
   });
 
-  await sendEmail({
-    to: email,
-    subject: "Login to Casulsulvania",
-    body: `
+  if (!user.isTestUser) {
+    await sendEmail({
+      to: email,
+      subject: "Login to Casulsulvania",
+      body: `
       Welcome! Click this link to log in: <a href="${config.baseUrl}/admin/login/verify?otp=${otp}" target="_blank">GO</a>
     `,
-  });
+    });
+  } else {
+    console.debug(`Skipping email for test user: ${email}`);
+  }
 }

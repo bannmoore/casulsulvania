@@ -9,7 +9,7 @@ const config = {
   includePattern: null,
   logLevel: "warn",
   numericParser: "string",
-  outFile: "./src/db.d.ts",
+  outFile: "",
   partitions: false,
   print: false,
   runtimeEnums: false,

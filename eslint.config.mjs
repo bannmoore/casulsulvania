@@ -34,7 +34,13 @@ const eslintConfig = [
     },
   },
   {
-    files: ["**/src/test/**", "**/*.test.ts", "*.mjs"],
+    files: [
+      "**/src/test/**",
+      "**/*.test.ts",
+      "*.mjs",
+      "**/cypress/**",
+      "cypress.config.ts",
+    ],
     rules: {
       "no-restricted-imports": "off",
       "import/no-extraneous-dependencies": ["error", { devDependencies: true }],
