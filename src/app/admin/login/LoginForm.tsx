@@ -40,15 +40,18 @@ export default function LoginForm() {
       {error && <div className="alert alert-error mb-4">{error}</div>}
 
       <form onSubmit={handleSubmit}>
-        <input
-          type="email"
-          id="email"
-          required
-          disabled={isLoading}
-          placeholder="Email"
-          value={email}
-          onChange={handleEmailChange}
-        />
+        <div className="mb-4">
+          <input
+            type="email"
+            id="email"
+            required
+            disabled={isLoading}
+            placeholder="Email"
+            value={email}
+            onChange={handleEmailChange}
+            data-1p-ignore
+          />
+        </div>
         <button type="submit">Login</button>
       </form>
     </>

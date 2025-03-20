@@ -32,7 +32,7 @@ export async function GET(request: Request) {
 
     await database.deleteOtp(otp);
 
-    const response = redirect("/admin");
+    const response = redirect("/admin/login/success");
 
     response.cookies.set("token", accessToken, {
       httpOnly: true,
@@ -50,6 +50,6 @@ export async function GET(request: Request) {
     let message = "Unknown Error";
     if (err instanceof Error) message = err.message;
 
-    return redirect(`/admin/error?description=${message}`);
+    return redirect(`/admin/login/error?description=${message}`);
   }
 }

@@ -49,7 +49,7 @@ export default async function RootLayout({
                   }}
                 >
                   <button role="link" type="submit">
-                    Sign Out
+                    Log Out
                   </button>
                 </form>
               </div>
@@ -57,7 +57,7 @@ export default async function RootLayout({
           </div>
         </header>
         <main className="container m-auto p-4">{children}</main>
-        <footer className="container m-auto mt-8">
+        <footer className="container m-auto p-4 mt-8">
           <p>&copy; Brittany Ann Moore, 2025</p>
           <p>This website is not endorsed by or affiliated with EA.</p>
         </footer>
