@@ -1,5 +1,5 @@
+import { config } from "@/config";
 import * as postmark from "postmark";
-import { config } from "./config";
 
 export function sendEmail({
   to,

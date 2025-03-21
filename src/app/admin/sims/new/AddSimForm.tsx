@@ -1,7 +1,7 @@
 "use client";
 
 import SingleSelect from "@/components/ux/SingleSelect";
-import { Age, AgeId, LifeState, LifeStateId, Sim } from "@/database";
+import { Age, AgeId, LifeState, LifeStateId, Sim } from "@/clients/database";
 import { useRouter } from "next/navigation";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { addSim } from "./actions";

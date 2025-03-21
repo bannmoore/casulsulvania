@@ -1,4 +1,4 @@
-import database from "@/database";
+import database from "@/clients/database";
 import AddSimForm from "./AddSimForm";
 
 export default async function Page() {

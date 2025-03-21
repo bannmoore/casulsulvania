@@ -1,6 +1,6 @@
 "use server";
 
-import database, { AgeId, LifeStateId } from "@/database";
+import database, { AgeId, LifeStateId } from "@/clients/database";
 
 export async function addSim({
   firstName,

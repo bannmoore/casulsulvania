@@ -1,4 +1,4 @@
-import database from "@/database";
+import database from "@/clients/database";
 import Link from "next/link";
 
 export default async function Page() {

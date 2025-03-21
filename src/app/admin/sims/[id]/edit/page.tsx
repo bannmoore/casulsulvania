@@ -1,4 +1,4 @@
-import database from "@/database";
+import database from "@/clients/database";
 import { notFound } from "next/navigation";
 import EditSimForm from "./EditSimForm";
 import Link from "next/link";

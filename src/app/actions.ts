@@ -1,6 +1,6 @@
 "use server";
 
-import database from "@/database";
+import database from "@/clients/database";
 import { redirectWithBaseUrl } from "@/util/next";
 import { cookies } from "next/headers";
 

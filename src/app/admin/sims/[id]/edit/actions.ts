@@ -6,7 +6,7 @@ import database, {
   CareerBranchId,
   LifeStateId,
   TraitId,
-} from "@/database";
+} from "@/clients/database";
 import { revalidatePath } from "next/cache";
 
 export async function updateSim(

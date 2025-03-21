@@ -17,7 +17,7 @@ import {
   SimTrait,
   Trait,
   TraitId,
-} from "@/database";
+} from "@/clients/database";
 import { updateSim } from "./actions";
 import MultiSelect from "@/components/ux/MultiSelect";
 

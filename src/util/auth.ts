@@ -1,4 +1,4 @@
-import database from "@/database";
+import database from "@/clients/database";
 import { cookies } from "next/headers";
 
 /** Returns the database user if currently logged in, otherwise undefined */

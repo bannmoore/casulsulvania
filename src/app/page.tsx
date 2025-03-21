@@ -1,4 +1,4 @@
-import database from "@/database";
+import database from "@/clients/database";
 
 export default async function Page() {
   const sims = await database.getAllSims();

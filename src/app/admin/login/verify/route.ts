@@ -1,7 +1,7 @@
-import database from "@/database";
+import database from "@/clients/database";
 import { config } from "@/config";
 import { redirectWithBaseUrl } from "@/util/next";
-import { generateAccessToken } from "@/otp";
+import { generateAccessToken } from "@/util/crypto";
 
 export async function GET(request: Request) {
   try {

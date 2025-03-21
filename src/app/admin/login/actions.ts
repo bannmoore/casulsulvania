@@ -2,9 +2,9 @@
 
 import { addHoursToDate } from "@/util/date";
 import { config } from "@/config";
-import database from "@/database";
-import { generateOtp } from "@/otp";
-import { sendEmail } from "@/postmark";
+import database from "@/clients/database";
+import { generateOtp } from "@/util/crypto";
+import { sendEmail } from "@/clients/postmark";
 
 export async function sendLoginEmail(email: string) {
   const user = await database.getUserByEmail(email);
