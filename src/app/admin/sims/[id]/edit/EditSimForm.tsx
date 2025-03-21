@@ -7,19 +7,24 @@ import {
   AgeId,
   Aspiration,
   AspirationId,
+  CareerBranch,
+  CareerBranchId,
   LifeState,
   LifeStateId,
   Sim,
   SimAspiration,
+  SimCareerBranch,
   SimTrait,
   Trait,
   TraitId,
 } from "@/database";
 import { updateSim } from "./actions";
+import MultiSelect from "@/components/ux/MultiSelect";
 
 export default function AddSimForm({
   ages,
   lifeStates,
+  careerBranches,
   sims,
   infantTraits,
   toddlerTraits,
@@ -32,9 +37,11 @@ export default function AddSimForm({
   sim,
   simAspirations,
   simTraits,
+  simCareerBranches,
 }: {
   ages: Age[];
   lifeStates: LifeState[];
+  careerBranches: CareerBranch[];
   sims: Sim[];
   infantTraits: Trait[];
   toddlerTraits: Trait[];
@@ -47,6 +54,7 @@ export default function AddSimForm({
   sim: Sim;
   simAspirations: SimAspiration[];
   simTraits: SimTrait[];
+  simCareerBranches: SimCareerBranch[];
 }) {
   const [firstName, setFirstName] = useState(sim.firstName);
   const [lastName, setLastName] = useState(sim.lastName);
@@ -102,6 +110,11 @@ export default function AddSimForm({
       ?.aspirationId
   );
 
+  /* career branches */
+  const [careerBranchIds, setCareerBranchIds] = useState<CareerBranchId[]>(
+    simCareerBranches.map(({ careerBranchId }) => careerBranchId)
+  );
+
   /* form state */
 
   const [isSuccessful, setIsSuccessful] = useState(false);
@@ -150,6 +163,7 @@ export default function AddSimForm({
         teenTraitId && { ageId: "teen", traitId: teenTraitId },
         adultTraitId && { ageId: "young_adult", traitId: adultTraitId }
       ).filter((x) => !!x),
+      careerBranches: careerBranchIds,
     })
       .then(() => setIsSuccessful(true))
       .catch((err) => {
@@ -350,6 +364,17 @@ export default function AddSimForm({
             onChange={(newValue) => setAdultAspirationId(newValue)}
             options={adultAspirations}
             placeholder="Choose adult aspiration"
+            isSearchable={true}
+          />
+        </div>
+
+        <div className="mb-4">
+          <MultiSelect
+            name="careerBranches"
+            value={careerBranchIds}
+            onChange={(newValue) => setCareerBranchIds(newValue)}
+            options={careerBranches}
+            placeholder="Choose careers"
             isSearchable={true}
           />
         </div>

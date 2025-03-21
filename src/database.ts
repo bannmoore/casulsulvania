@@ -19,6 +19,7 @@ import {
   TraitId,
   AspirationCategory,
   LifeStateId,
+  CareerBranchId,
 } from "./db";
 import { Pool } from "pg";
 import { parse } from "pg-connection-string";
@@ -85,6 +86,8 @@ class DatabaseClient {
     });
   }
 
+  /* users */
+
   async getCurrentUser(token: string): Promise<User | undefined> {
     return this._db
       .selectFrom("users")
@@ -101,6 +104,8 @@ class DatabaseClient {
       .where("email", "=", email)
       .executeTakeFirst();
   }
+
+  /* otps */
 
   async getOtp(email: string): Promise<Otp | undefined> {
     return this._db
@@ -134,6 +139,8 @@ class DatabaseClient {
       .executeTakeFirst();
   }
 
+  /* sessions */
+
   async upsertSession({ userId, token, expiresAt }: Unsaved<Session>) {
     return this._db
       .insertInto("sessions")
@@ -147,6 +154,12 @@ class DatabaseClient {
 
   async deleteSession(token: string): Promise<void> {
     await this._db.deleteFrom("sessions").where("token", "=", token).execute();
+  }
+
+  /* sims */
+
+  async getAllSims(): Promise<Sim[]> {
+    return this._db.selectFrom("sims").selectAll().execute();
   }
 
   async getSimById(id: string): Promise<Sim | undefined> {
@@ -181,6 +194,8 @@ class DatabaseClient {
       .where("id", "=", id)
       .execute();
   }
+
+  /* sims_aspirations */
 
   async getSimAspirations(simId: string): Promise<SimAspiration[]> {
     return this._db
@@ -218,6 +233,8 @@ class DatabaseClient {
       .execute();
   }
 
+  /* sims_traits */
+
   async getSimTraits(simId: string): Promise<SimTrait[]> {
     return this._db
       .selectFrom("simsTraits")
@@ -252,6 +269,44 @@ class DatabaseClient {
       )
       .execute();
   }
+
+  /* sims_career_branches */
+
+  async getSimCareerBranches(simId: string): Promise<SimCareerBranch[]> {
+    return this._db
+      .selectFrom("simsCareerBranches")
+      .selectAll()
+      .where("simId", "=", simId)
+      .execute();
+  }
+
+  async clearSimCareerBranches(simId: string): Promise<void> {
+    await this._db
+      .deleteFrom("simsCareerBranches")
+      .where("simId", "=", simId)
+      .execute();
+  }
+
+  async insertSimCareerBranches(
+    simId: string,
+    careerBranches: CareerBranchId[]
+  ): Promise<void> {
+    if (!careerBranches.length) {
+      return;
+    }
+
+    await this._db
+      .insertInto("simsCareerBranches")
+      .values(
+        careerBranches.map((careerBranchId) => ({
+          simId,
+          careerBranchId,
+        }))
+      )
+      .execute();
+  }
+
+  /* data */
 
   async getAges(): Promise<Age[]> {
     return this._db.selectFrom("ages").selectAll().execute();
@@ -298,10 +353,6 @@ class DatabaseClient {
 
   async getCareerBranches(): Promise<CareerBranch[]> {
     return this._db.selectFrom("careerBranches").selectAll().execute();
-  }
-
-  async getAllSims(): Promise<Sim[]> {
-    return this._db.selectFrom("sims").selectAll().execute();
   }
 }
 

@@ -55,6 +55,7 @@ export interface CareerBranches {
   branchName: string | null;
   careerName: string;
   id: CareerBranchId;
+  name: Generated<string>;
   product: ProductId;
 }
 

@@ -3,6 +3,7 @@
 import database, {
   AgeId,
   AspirationId,
+  CareerBranchId,
   LifeStateId,
   TraitId,
 } from "@/database";
@@ -19,6 +20,7 @@ export async function updateSim(
     parent2Id,
     aspirations,
     traits,
+    careerBranches,
   }: {
     firstName: string;
     lastName: string;
@@ -28,6 +30,7 @@ export async function updateSim(
     parent2Id: string | undefined;
     aspirations: { aspirationId: AspirationId; ageId: AgeId }[];
     traits: { traitId: TraitId; ageId: AgeId }[];
+    careerBranches: CareerBranchId[];
   }
 ) {
   await database.updateSim(id, {
@@ -44,6 +47,9 @@ export async function updateSim(
 
   await database.clearSimTraits(id);
   await database.insertSimTraits(id, traits);
+
+  await database.clearSimCareerBranches(id);
+  await database.insertSimCareerBranches(id, careerBranches);
 
   revalidatePath(`admin/sims/${id}/edit`, "page");
 }
