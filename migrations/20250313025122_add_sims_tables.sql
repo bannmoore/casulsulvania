@@ -11,6 +11,7 @@ CREATE TABLE sims(
   parent2_id bigint REFERENCES sims,
   story text NOT NULL DEFAULT '',
   is_deceased boolean NOT NULL DEFAULT FALSE,
+  gallery_id text,
   created_at timestamp NOT NULL DEFAULT now(),
   updated_at timestamp NOT NULL DEFAULT now()
 );

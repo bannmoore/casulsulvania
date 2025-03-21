@@ -4,6 +4,7 @@
 CREATE TABLE users(
   id bigserial PRIMARY KEY,
   email text UNIQUE NOT NULL,
+  is_test_user boolean NOT NULL DEFAULT FALSE,
   created_at timestamp NOT NULL DEFAULT now(),
   updated_at timestamp NOT NULL DEFAULT now()
 );
