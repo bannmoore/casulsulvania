@@ -244,6 +244,7 @@ export default function AddSimForm({
               onChange={(newValue) => setParent1Id(newValue)}
               options={sims}
               placeholder="Choose first parent"
+              isSearchable={true}
             />
           </div>
 
@@ -254,6 +255,7 @@ export default function AddSimForm({
               onChange={(newValue) => setParent2Id(newValue)}
               options={sims}
               placeholder="Choose second parent"
+              isSearchable={true}
             />
           </div>
         </div>

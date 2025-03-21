@@ -37,7 +37,7 @@
   }
 
   input {
-    @apply w-full outline-none focus:outline-none bg-blue-950 text-white placeholder:text-blue-200 ring-transparent border border-blue-400 transition-all ease-in disabled:opacity-50 disabled:pointer-events-none select-none px-2.5 py-2 ring shadow-sm rounded-lg duration-100 hover:border-blue-100 focus:border-blue-100;
+    @apply w-full bg-blue-950 text-white placeholder:text-blue-200 ring-transparent border border-blue-400 transition-all ease-in disabled:opacity-50 disabled:pointer-events-none select-none px-2.5 py-2 ring shadow-sm rounded-lg duration-100 hover:border-blue-100 focus:border-blue-100;
   }
 
   /*
@@ -50,8 +50,11 @@
    }
 
   .react-select__control {
-    @apply outline-none focus:outline-none bg-blue-950 text-white placeholder:text-blue-200 ring-transparent border border-blue-400 transition-all ease-in disabled:opacity-50 disabled:pointer-events-none select-none px-2.5 py-2 ring shadow-sm rounded-lg duration-100 hover:border-blue-100 focus:border-blue-100;  
-    @apply cursor-pointer pointer-events-auto;
+    @apply bg-blue-950 text-white placeholder:text-blue-200 ring-transparent border border-blue-400 transition-all ease-in disabled:opacity-50 disabled:pointer-events-none select-none px-2.5 py-2 ring shadow-sm rounded-lg duration-100 hover:border-blue-100 cursor-pointer pointer-events-auto;  
+  }
+
+  .react-select__control--is-focused {
+    @apply border-blue-100;
   }
 
   .react-select__value-container {
@@ -59,9 +62,7 @@
   }
 
   .react-select__menu {
-    @apply outline-none focus:outline-none bg-blue-950 text-white placeholder:text-blue-200 ring-transparent border border-blue-400 transition-all ease-in disabled:opacity-50 disabled:pointer-events-none select-none ring shadow-sm rounded-lg duration-100 hover:border-blue-100 focus:border-blue-100;
-    @apply mt-2;
-    @apply cursor-pointer pointer-events-auto;
+    @apply bg-blue-950 text-white placeholder:text-blue-200 ring-transparent border border-blue-400 transition-all ease-in disabled:opacity-50 disabled:pointer-events-none select-none ring shadow-sm rounded-lg duration-100 hover:border-blue-100 focus:border-blue-100 mt-2 cursor-pointer pointer-events-auto;
   }
 
   .react-select__menu-list {
@@ -69,8 +70,11 @@
   }
 
   .react-select__option {
-    @apply hover:bg-blue-800 p-2 rounded-lg;
-    @apply cursor-pointer pointer-events-auto;
+    @apply hover:bg-blue-800 p-2 rounded-lg cursor-pointer pointer-events-auto;
+  }
+
+  .react-select__option--is-focused {
+    @apply bg-blue-700;
   }
 
   .react-select__multi-value {
