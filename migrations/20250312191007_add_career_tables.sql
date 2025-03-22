@@ -32,7 +32,8 @@ CREATE TYPE career_id AS ENUM(
         'interior_decorator',
         'romance_consultant',
         'reaper',
-        'undertaker'
+        'undertaker',
+        'business_owner'
         --
 );
 
@@ -78,7 +79,8 @@ Start a career in Social Media to be the person that answers these questions for
 ('interior_decorator', 'Interior Decorator', 'dream_home_decorator', 'Being an Interior Decorator is about two things: Having a good eye for design, and Building relationships with Clients. Having people skills and some artistic vision will lead to a bright future and possible recognition. You may start small with some simple home renovations, but eventually with enough hard work, bigger Clients and buildings could get you the recognition you deserve!'),
 ('romance_consultant', 'Romance Consultant', 'lovestruck', 'Are you a natural at interpreting feelings, a sucker for love, and interested in helping others find their happily ever after? You may be destined to be a Romance Consultant!'),
 ('reaper', 'Reaper', 'life_and_death', 'The time is nigh to don a robe and become a Reaper! As Grim''s employee, you''ll be able to climb his triangular ladder and gain rewards like Discussing Deathly Business and owning a Timeless Hourglass. Scry your way to the top and earn being Grim''s Right Hand while unlocking a truly Grim-worthy outfit as you spread Death''s Touch wherever you go.'),
-('undertaker', 'Undertaker', 'life_and_death', 'Service both the living and the dead by undertaking this position! From grave digging to embalming, Sims who pursue a career in the funeral industry ensure all Sims are able to move on in peace. Specializing in this before-afterlife care prepares you for difficult moments like, Discussing End of Life services or Contemplating Existence. Six feet in you may be rewarded with a Plague Mask, a Murphy Membrane Bust, or a Corpus Commendation Plaque to honor your achievements."')
+('undertaker', 'Undertaker', 'life_and_death', 'Service both the living and the dead by undertaking this position! From grave digging to embalming, Sims who pursue a career in the funeral industry ensure all Sims are able to move on in peace. Specializing in this before-afterlife care prepares you for difficult moments like, Discussing End of Life services or Contemplating Existence. Six feet in you may be rewarded with a Plague Mask, a Murphy Membrane Bust, or a Corpus Commendation Plaque to honor your achievements."'),
+('business_owner', 'Business Owner', 'base', '')
                 --
 ;
 
@@ -143,7 +145,12 @@ CREATE TYPE career_branch_id AS ENUM(
         'romance_consultant_relationship_counselor',
         'reaper',
         'undertaker_funeral_director',
-        'undertaker_mortician'
+        'undertaker_mortician',
+        'business_owner_retail',
+        'business_owner_restaurant',
+        'business_owner_vet_clinic',
+        'business_owner_residential_rental',
+        'business_owner_small_business'
         --
 );
 
@@ -227,7 +234,12 @@ If you''ve been certified as a Paranormal Investigator, you''re welcome to join 
 ('romance_consultant_relationship_counselor', 'romance_consultant', 'Romance Consultant - Relationship Counselor', 'lovestruck', 'Do you have the ability to help Sims face their fears, work through their emotions, and find love again in relationships? The Relationship Counselor path might be for you!'),
 ('reaper', 'reaper', 'Reaper', 'life_and_death', 'The time is nigh to don a robe and become a Reaper! As Grim''s employee, you''ll be able to climb his triangular ladder and gain rewards like Discussing Deathly Business and owning a Timeless Hourglass. Scry your way to the top and earn being Grim''s Right Hand while unlocking a truly Grim-worthy outfit as you spread Death''s Touch wherever you go.'),
 ('undertaker_funeral_director', 'undertaker', 'Undertaker - Funeral Director', 'life_and_death', 'Funeral Directors can offer a clean tissue and a stunning floral arrangement. From clerical work to rites of passage, viewings to processions, the director helps handle death''s aftermath with grace.'),
-('undertaker_mortician', 'undertaker', 'Undertaker - Mortician', 'life_and_death', 'Morticians embody the science side of death. They''re likely to endure wacky chemical fumes and makeup mishaps while regularly getting the cold shoulder from clients. Ultimately, they''ll need to excel in preparations for any wake without waking the dead.')
+('undertaker_mortician', 'undertaker', 'Undertaker - Mortician', 'life_and_death', 'Morticians embody the science side of death. They''re likely to endure wacky chemical fumes and makeup mishaps while regularly getting the cold shoulder from clients. Ultimately, they''ll need to excel in preparations for any wake without waking the dead.'),
+('business_owner_retail', 'business_owner', 'Retail Business Owner', 'get_to_work', 'Sell almost any object, items, foods, and clothes.'),
+('business_owner_restaurant', 'business_owner', 'Restaurant Owner', 'dine_out', 'Provide food and drinks in different courses with special ambience.'),
+('business_owner_vet_clinic', 'business_owner', 'Vet Clinic Owner', 'cats_and_dogs', 'Give healthcare to Cats & Dogs and perform surgeries.'),
+('business_owner_residential_rental', 'business_owner', 'Residential Rental Landlord', 'for_rent', 'Own residential lots to rent out units to tenants.'),
+('business_owner_small_business', 'business_owner', 'Small Business Owner', 'businesses_and_hobbies', 'Use kiosks and whiteboards to give paid services as well as use displays to sell craftables and small objects.')
                 --
 ;
 
