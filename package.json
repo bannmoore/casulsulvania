@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "codegen": "kysely-codegen --out-file ./src/db.d.ts",
+    "codegen": "kysely-codegen --out-file ./src/clients/db.d.ts",
     "cy:open": "cypress open",
     "cy:run": "cypress run"
   },
