@@ -159,7 +159,12 @@ class DatabaseClient {
   /* sims */
 
   async getAllSims(): Promise<Sim[]> {
-    return this._db.selectFrom("sims").selectAll().execute();
+    return this._db
+      .selectFrom("sims")
+      .selectAll("sims")
+      .innerJoin("ages", "ages.id", "sims.ageId")
+      .orderBy("ages.id desc")
+      .execute();
   }
 
   async getSimById(id: string): Promise<Sim | undefined> {
