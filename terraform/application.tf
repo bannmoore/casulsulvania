@@ -56,6 +56,29 @@ resource "digitalocean_app" "cas_app" {
         value = var.postmark_apikey
         type  = "SECRET"
       }
+
+      env {
+        key   = "DO_SPACES_ACCESS_ID"
+        value = var.do_spaces_access_id
+        type  = "SECRET"
+      }
+
+      env {
+        key   = "DO_SPACES_SECRET_KEY"
+        value = var.do_spaces_secret_key
+        type  = "SECRET"
+      }
+
+      env {
+        key   = "DO_SPACES_BUCKET_NAME"
+        value = digitalocean_spaces_bucket.cas.name
+        type  = "SECRET"
+      }
+      env {
+        key   = "DO_SPACES_ENDPOINT"
+        value = digitalocean_spaces_bucket.cas.endpoint
+        type  = "SECRET"
+      }
     }
 
     database {

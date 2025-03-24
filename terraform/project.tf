@@ -9,6 +9,7 @@ resource "digitalocean_project" "cas_project" {
     digitalocean_database_cluster.cas_postgres.urn,
     digitalocean_droplet.cas_jump_server.urn,
     digitalocean_volume.cas_jump_server_volume.urn,
-    digitalocean_domain.casulsulvania_com.urn
+    digitalocean_domain.casulsulvania_com.urn,
+    digitalocean_spaces_bucket.cas.urn
   ]
 }

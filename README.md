@@ -30,6 +30,8 @@ brew bundle
 
 This Terraform configuration expects the following resources to already exist:
 - A container app registry called "bam"
+- An API token
+- A Digital Ocean Spaces Access Key
 
 ### Deployment
 
@@ -118,3 +120,4 @@ If your digitalocean_vpc resource is the first one for a region, it will automat
 - https://slugs.do-api.dev/
 - https://docs.docker.com/get-started/docker-concepts/the-basics/what-is-a-registry/#:~:text=Even%20though%20they're%20related,your%20images%20based%20on%20projects
 - https://docs.digitalocean.com/products/volumes/how-to/mount/
+- https://docs.digitalocean.com/products/spaces/how-to/use-aws-sdks/
