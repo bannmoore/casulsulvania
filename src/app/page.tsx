@@ -14,9 +14,21 @@ export default async function Page() {
             <li key={sim.id}>
               <Link
                 href={`/sims/${sim.id}`}
-                className="block bg-blue-800 hover:bg-blue-700 cursor-pointer p-4 h-20 hover:no-underline rounded-md"
+                className="flex flex-col bg-blue-800 hover:bg-blue-700 cursor-pointer h-30 hover:no-underline rounded-md"
               >
-                {sim.firstName} {sim.lastName}{" "}
+                <div
+                  className="flex-1"
+                  style={{
+                    backgroundImage: sim.imageUri
+                      ? `url(${sim.imageUri})`
+                      : undefined,
+                    backgroundPosition: "center",
+                    backgroundSize: "cover",
+                  }}
+                ></div>
+                <div className="text-center p-1">
+                  {sim.firstName} {sim.lastName}
+                </div>
               </Link>
             </li>
           ))}

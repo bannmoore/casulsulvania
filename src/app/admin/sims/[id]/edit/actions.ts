@@ -7,11 +7,13 @@ import database, {
   LifeStateId,
   TraitId,
 } from "@/clients/database";
+import storage from "@/clients/storage";
 import { revalidatePath } from "next/cache";
 
 export async function updateSim(
   id: string,
   {
+    imageFile,
     firstName,
     lastName,
     ageId,
@@ -22,6 +24,7 @@ export async function updateSim(
     traits,
     careerBranches,
   }: {
+    imageFile: File | undefined;
     firstName: string;
     lastName: string;
     ageId: AgeId;
@@ -33,6 +36,11 @@ export async function updateSim(
     careerBranches: CareerBranchId[];
   }
 ) {
+  let imageUri;
+  if (imageFile) {
+    imageUri = await storage.uploadSimImage(imageFile, `sim-${id}.png`);
+  }
+
   await database.updateSim(id, {
     firstName,
     lastName,
@@ -40,6 +48,7 @@ export async function updateSim(
     lifeStateId,
     parent1Id: parent1Id ?? null,
     parent2Id: parent2Id ?? null,
+    imageUri,
   });
 
   await database.clearSimAspirations(id);

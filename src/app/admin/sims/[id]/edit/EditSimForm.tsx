@@ -1,6 +1,6 @@
 "use client";
 
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import SingleSelect from "@/components/ux/SingleSelect";
 import {
   Age,
@@ -20,6 +20,8 @@ import {
 } from "@/clients/database";
 import { updateSim } from "./actions";
 import MultiSelect from "@/components/ux/MultiSelect";
+import FileUpload from "@/components/ux/FileUpload";
+import Image from "next/image";
 
 export default function AddSimForm({
   ages,
@@ -56,6 +58,9 @@ export default function AddSimForm({
   simTraits: SimTrait[];
   simCareerBranches: SimCareerBranch[];
 }) {
+  const [imageFile, setImageFile] = useState<File>();
+  const [imagePreview, setImagePreview] = useState<string>();
+
   const [firstName, setFirstName] = useState(sim.firstName);
   const [lastName, setLastName] = useState(sim.lastName);
   const [ageId, setAgeId] = useState<AgeId | undefined>(sim.ageId);
@@ -121,6 +126,23 @@ export default function AddSimForm({
   const [error, setError] = useState("");
   const [isLoading, setLoading] = useState(false);
 
+  useEffect(() => {
+    return () => {
+      if (imagePreview) {
+        URL.revokeObjectURL(imagePreview);
+      }
+    };
+  }, [imagePreview]);
+
+  function handleImageChange(file: File) {
+    if (imagePreview) {
+      URL.revokeObjectURL(imagePreview);
+    }
+
+    setImageFile(file);
+    setImagePreview(URL.createObjectURL(file));
+  }
+
   async function handleSubmit(event: FormEvent) {
     event.preventDefault();
 
@@ -134,6 +156,7 @@ export default function AddSimForm({
     }
 
     await updateSim(sim.id, {
+      imageFile,
       firstName,
       lastName,
       ageId,
@@ -186,7 +209,31 @@ export default function AddSimForm({
       )}
       {error && <div className="alert alert-error mb-4">{error}</div>}
 
+      {sim.imageUri && (
+        <Image
+          alt="current image"
+          src={sim.imageUri}
+          width={100}
+          height={100}
+          className="mb-4"
+        />
+      )}
+
+      {imagePreview && (
+        <Image
+          alt="preview image"
+          src={imagePreview}
+          width={100}
+          height={100}
+          className="mb-4"
+        />
+      )}
+
       <form onSubmit={handleSubmit}>
+        <div className="mb-4">
+          <FileUpload onChange={handleImageChange} id="imageFile" />
+        </div>
+
         <div className="flex gap-2 mb-4">
           <input
             type="text"

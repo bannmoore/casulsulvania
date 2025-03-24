@@ -4,4 +4,8 @@ export const config = {
   databaseCert: process.env.DATABASE_CERT || "",
   env: process.env.NODE_ENV || "dev",
   postmarkApikey: process.env.POSTMARK_APIKEY || "",
+  doSpacesBucketName: process.env.DO_SPACES_BUCKET_NAME || "",
+  doSpacesEndpoint: process.env.DO_SPACES_ENDPOINT || "",
+  doSpacesAccessId: process.env.DO_SPACES_ACCESS_ID || "",
+  doSpacesSecretKey: process.env.DO_SPACES_SECRET_KEY || "",
 };
