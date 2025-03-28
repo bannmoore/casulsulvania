@@ -209,13 +209,13 @@ export default function AddSimForm({
       )}
       {error && <div className="alert alert-error mb-4">{error}</div>}
 
-      {sim.imageUri && (
+      {sim.imageUri && !imagePreview && (
         <Image
           alt="current image"
           src={sim.imageUri}
           width={100}
           height={100}
-          className="mb-4"
+          className="mx-auto mb-4"
         />
       )}
 
@@ -225,12 +225,12 @@ export default function AddSimForm({
           src={imagePreview}
           width={100}
           height={100}
-          className="mb-4"
+          className="mx-auto mb-4"
         />
       )}
 
       <form onSubmit={handleSubmit}>
-        <div className="mb-4">
+        <div className="text-center mb-4">
           <FileUpload onChange={handleImageChange} id="imageFile" />
         </div>
 
