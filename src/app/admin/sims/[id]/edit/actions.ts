@@ -38,7 +38,10 @@ export async function updateSim(
 ) {
   let imageUri;
   if (imageFile) {
-    imageUri = await storage.uploadSimImage(imageFile, `sim-${id}.png`);
+    imageUri = await storage.uploadSimImage(
+      imageFile,
+      `sim-${id}-${ageId}.png`
+    );
   }
 
   await database.updateSim(id, {
