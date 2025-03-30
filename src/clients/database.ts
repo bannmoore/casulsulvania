@@ -21,6 +21,7 @@ import {
   LifeStateId,
   CareerBranchId,
   SimsImages,
+  TraitConflicts,
 } from "./db";
 import { Pool } from "pg";
 import { parse } from "pg-connection-string";
@@ -50,8 +51,8 @@ export type SimCareerBranch = Selectable<SimsCareerBranches>;
 export type SimTrait = Selectable<SimsTraits>;
 export type SimImage = Selectable<SimsImages>;
 export type Trait = Selectable<Traits>;
+export type TraitConflict = Selectable<TraitConflicts>;
 export type User = Selectable<Users>;
-
 type Unsaved<T> = Omit<T, "id" | "createdAt" | "updatedAt">;
 
 class DatabaseClient {
@@ -402,6 +403,10 @@ class DatabaseClient {
         .orderBy("name asc")
         .execute()
     );
+  }
+
+  async getTraitConflicts() {
+    return this._db.selectFrom("traitConflicts").selectAll().execute();
   }
 
   async getCareerBranches(): Promise<CareerBranch[]> {

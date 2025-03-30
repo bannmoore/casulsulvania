@@ -6,7 +6,15 @@ export default async function Page() {
 
   return (
     <div>
-      <h1 className="mb-4">My Sims</h1>
+      <div className="flex justify-between items-center mb-4">
+        <h1>My Sims</h1>
+        <Link
+          href="/sims/generate"
+          className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
+        >
+          Generate Random Sim
+        </Link>
+      </div>
       {!sims.length && <div>None found.</div>}
       {!!sims.length && (
         <ul className="grid grid-cols-4 gap-4">
