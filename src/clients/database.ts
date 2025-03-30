@@ -20,6 +20,7 @@ import {
   AspirationCategory,
   LifeStateId,
   CareerBranchId,
+  SimsImages,
 } from "./db";
 import { Pool } from "pg";
 import { parse } from "pg-connection-string";
@@ -41,10 +42,13 @@ export type LifeState = Selectable<LifeStates>;
 export type Otp = Selectable<Otps>;
 export type Product = Selectable<Products>;
 export type Session = Selectable<Sessions>;
-export type Sim = Selectable<Sims>;
+export type Sim = Selectable<Sims> & {
+  imageUri: string | null;
+};
 export type SimAspiration = Selectable<SimsAspirations>;
 export type SimCareerBranch = Selectable<SimsCareerBranches>;
 export type SimTrait = Selectable<SimsTraits>;
+export type SimImage = Selectable<SimsImages>;
 export type Trait = Selectable<Traits>;
 export type User = Selectable<Users>;
 
@@ -163,6 +167,12 @@ class DatabaseClient {
       .selectFrom("sims")
       .selectAll("sims")
       .innerJoin("ages", "ages.id", "sims.ageId")
+      .leftJoin("simsImages", (join) =>
+        join
+          .onRef("sims.id", "=", "simsImages.simId")
+          .onRef("simsImages.ageId", "=", "sims.ageId")
+      )
+      .select("simsImages.imageUri")
       .orderBy("ages.id desc")
       .execute();
   }
@@ -171,6 +181,12 @@ class DatabaseClient {
     return this._db
       .selectFrom("sims")
       .selectAll()
+      .leftJoin("simsImages", (join) =>
+        join
+          .onRef("sims.id", "=", "simsImages.simId")
+          .onRef("simsImages.ageId", "=", "sims.ageId")
+      )
+      .select("simsImages.imageUri")
       .where("id", "=", id)
       .executeTakeFirst();
   }
@@ -307,6 +323,38 @@ class DatabaseClient {
           simId,
           careerBranchId,
         }))
+      )
+      .execute();
+  }
+
+  /* sims_images */
+  async getSimImages(simId: string): Promise<SimImage[]> {
+    return this._db
+      .selectFrom("simsImages")
+      .selectAll("simsImages")
+      .where("simId", "=", simId)
+      .execute();
+  }
+
+  async upsertSimImage(
+    simId: string,
+    ageId: AgeId,
+    imageUri: string
+  ): Promise<void> {
+    await this._db
+      .insertInto("simsImages")
+      .values({
+        simId,
+        ageId,
+        imageUri,
+        updatedAt: new Date(),
+      })
+      .onConflict((oc) =>
+        oc
+          .column("simId")
+          .column("ageId")
+          .doUpdateSet({ imageUri, updatedAt: new Date() })
+          .where("simsImages.ageId", "=", ageId)
       )
       .execute();
   }

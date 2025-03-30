@@ -42,6 +42,7 @@ export async function updateSim(
       imageFile,
       `sim-${id}-${ageId}.png`
     );
+    await database.upsertSimImage(id, ageId, imageUri);
   }
 
   await database.updateSim(id, {
@@ -51,7 +52,6 @@ export async function updateSim(
     lifeStateId,
     parent1Id: parent1Id ?? null,
     parent2Id: parent2Id ?? null,
-    imageUri,
   });
 
   await database.clearSimAspirations(id);

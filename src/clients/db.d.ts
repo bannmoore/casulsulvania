@@ -114,7 +114,6 @@ export interface Sims {
   firstName: string;
   galleryId: string | null;
   id: Generated<Int8>;
-  imageUri: string | null;
   isDeceased: Generated<boolean>;
   lastName: string;
   lifeStateId: Generated<LifeStateId>;
@@ -135,6 +134,13 @@ export interface SimsAspirations {
 export interface SimsCareerBranches {
   careerBranchId: CareerBranchId;
   simId: Int8;
+}
+
+export interface SimsImages {
+  ageId: AgeId;
+  imageUri: string;
+  simId: Int8;
+  updatedAt: Generated<Timestamp>;
 }
 
 export interface SimsTraits {
@@ -178,6 +184,7 @@ export interface DB {
   sims: Sims;
   simsAspirations: SimsAspirations;
   simsCareerBranches: SimsCareerBranches;
+  simsImages: SimsImages;
   simsTraits: SimsTraits;
   traitConflicts: TraitConflicts;
   traits: Traits;

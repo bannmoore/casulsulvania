@@ -24,6 +24,7 @@ export default async function Page({
   const simAspirations = await database.getSimAspirations(id);
   const simTraits = await database.getSimTraits(id);
   const simCareerBranches = await database.getSimCareerBranches(id);
+  const simImages = await database.getSimImages(id);
 
   const sims = await database.getAllSims();
 
@@ -56,6 +57,7 @@ export default async function Page({
         simAspirations={simAspirations}
         simTraits={simTraits}
         simCareerBranches={simCareerBranches}
+        simImages={simImages}
       />
     </>
   );

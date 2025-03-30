@@ -14,6 +14,7 @@ import {
   Sim,
   SimAspiration,
   SimCareerBranch,
+  SimImage,
   SimTrait,
   Trait,
   TraitId,
@@ -40,6 +41,7 @@ export default function AddSimForm({
   simAspirations,
   simTraits,
   simCareerBranches,
+  simImages,
 }: {
   ages: Age[];
   lifeStates: LifeState[];
@@ -57,7 +59,11 @@ export default function AddSimForm({
   simAspirations: SimAspiration[];
   simTraits: SimTrait[];
   simCareerBranches: SimCareerBranch[];
+  simImages: SimImage[];
 }) {
+  const [currentSimImageUri] = useState(
+    simImages.find((image) => image.ageId === sim.ageId)?.imageUri
+  );
   const [imageFile, setImageFile] = useState<File>();
   const [imagePreview, setImagePreview] = useState<string>();
 
@@ -209,10 +215,10 @@ export default function AddSimForm({
       )}
       {error && <div className="alert alert-error mb-4">{error}</div>}
 
-      {sim.imageUri && !imagePreview && (
+      {currentSimImageUri && !imagePreview && (
         <Image
           alt="current image"
-          src={sim.imageUri}
+          src={currentSimImageUri}
           width={100}
           height={100}
           className="mx-auto mb-4"
