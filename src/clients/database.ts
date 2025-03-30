@@ -180,13 +180,13 @@ class DatabaseClient {
   async getSimById(id: string): Promise<Sim | undefined> {
     return this._db
       .selectFrom("sims")
-      .selectAll()
+      .selectAll("sims")
       .leftJoin("simsImages", (join) =>
         join
           .onRef("sims.id", "=", "simsImages.simId")
           .onRef("simsImages.ageId", "=", "sims.ageId")
       )
-      .select("simsImages.imageUri")
+      .select(["simsImages.imageUri"])
       .where("id", "=", id)
       .executeTakeFirst();
   }
