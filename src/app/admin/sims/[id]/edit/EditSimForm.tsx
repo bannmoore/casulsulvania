@@ -80,6 +80,8 @@ export default function AddSimForm({
     sim.parent2Id ?? undefined
   );
 
+  const [isDeceased, setIsDeceased] = useState(sim.isDeceased);
+  const [isAbstract, setIsAbstract] = useState(sim.isAbstract);
   /* traits */
 
   const [infantTraitId, setInfantTraitId] = useState<TraitId | undefined>(
@@ -169,6 +171,8 @@ export default function AddSimForm({
       parent1Id,
       parent2Id,
       lifeStateId,
+      isDeceased,
+      isAbstract,
       aspirations: new Array<
         { ageId: AgeId; aspirationId: AspirationId } | undefined
       >(
@@ -311,6 +315,30 @@ export default function AddSimForm({
               isSearchable={true}
             />
           </div>
+        </div>
+
+        <div className="flex gap-4 mb-4">
+          <label className="checkbox">
+            <input
+              type="checkbox"
+              checked={isDeceased}
+              onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                setIsDeceased(event.currentTarget.checked)
+              }
+            />
+            <span>Deceased</span>
+          </label>
+
+          <label className="checkbox">
+            <input
+              type="checkbox"
+              checked={isAbstract}
+              onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                setIsAbstract(event.currentTarget.checked)
+              }
+            />
+            <span>Abstract</span>
+          </label>
         </div>
 
         <h2 className="mb-2">Life Stages</h2>

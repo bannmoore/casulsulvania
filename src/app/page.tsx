@@ -2,7 +2,8 @@ import database from "@/clients/database";
 import Link from "next/link";
 
 export default async function Page() {
-  const sims = await database.getAllSims();
+  const allSims = await database.getAllSims();
+  const sims = allSims.filter((sim) => !sim.isAbstract && !sim.isDeceased);
 
   return (
     <div>
