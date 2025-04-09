@@ -27,3 +27,11 @@ resource "digitalocean_spaces_bucket_cors_configuration" "cas" {
     max_age_seconds = 3000
   }
 }
+
+resource "digitalocean_spaces_key" "cas_app" {
+  name = "cas-app"
+  grant {
+    bucket     = digitalocean_spaces_bucket.cas.name
+    permission = "readwrite"
+  }
+}

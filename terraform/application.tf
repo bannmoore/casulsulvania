@@ -58,8 +58,8 @@ resource "digitalocean_app" "cas_app" {
       }
 
       env {
-        key   = "DO_SPACES_ACCESS_ID"
-        value = var.do_spaces_access_id
+        key   = "DO_SPACES_SECRET_KEY"
+        value = digitalocean_spaces_key.cas_app.secret_key
         type  = "SECRET"
       }
 
