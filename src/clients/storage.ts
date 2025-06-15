@@ -47,6 +47,7 @@ class StorageClient {
         },
         (err, _data) => {
           if (err) {
+            console.error(err);
             reject(err);
           }
 
