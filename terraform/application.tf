@@ -35,6 +35,11 @@ resource "digitalocean_app" "cas_app" {
       }
 
       env {
+        key   = "NODE_ENV"
+        value = "production"
+      }
+
+      env {
         key   = "BASE_URL"
         value = "https://${digitalocean_domain.casulsulvania_com.name}"
       }
