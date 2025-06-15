@@ -6,6 +6,6 @@ export const config = {
   postmarkApikey: process.env.POSTMARK_APIKEY || "",
   doSpacesBucketName: process.env.DO_SPACES_BUCKET_NAME || "",
   doSpacesEndpoint: process.env.DO_SPACES_ENDPOINT || "",
-  doSpacesAccessId: process.env.DO_SPACES_ACCESS_ID || "",
+  doSpacesAccessKeyId: process.env.DO_SPACES_ACCESS_KEY_ID || "",
   doSpacesSecretKey: process.env.DO_SPACES_SECRET_KEY || "",
 };

@@ -9,12 +9,12 @@ class StorageClient {
   constructor({
     bucketName,
     endpoint,
-    accessId,
+    accessKeyId,
     secretKey,
   }: {
     bucketName: string;
     endpoint: string;
-    accessId: string;
+    accessKeyId: string;
     secretKey: string;
   }) {
     this._bucketName = bucketName;
@@ -24,7 +24,7 @@ class StorageClient {
       endpoint: `https://${endpoint}`,
       region: "us-east-1", // Ref: https://docs.digitalocean.com/products/spaces/how-to/use-aws-sdks/
       credentials: {
-        accessKeyId: accessId,
+        accessKeyId: accessKeyId,
         secretAccessKey: secretKey,
       },
     });
@@ -64,7 +64,7 @@ const storage = Object.freeze(
   new StorageClient({
     bucketName: config.doSpacesBucketName,
     endpoint: config.doSpacesEndpoint,
-    accessId: config.doSpacesAccessId,
+    accessKeyId: config.doSpacesAccessKeyId,
     secretKey: config.doSpacesSecretKey,
   })
 );
