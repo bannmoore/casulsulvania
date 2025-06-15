@@ -9,7 +9,7 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "casulsulvania-storage.sfo3.digitaloceanspaces.com",
         port: "",
-        pathname: "/sims/**",
+        pathname: "**",
       },
     ],
   },

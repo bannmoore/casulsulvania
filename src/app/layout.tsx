@@ -4,6 +4,7 @@ import "./globals.css";
 import Link from "next/link";
 import { logout } from "./actions";
 import { getSessionUser } from "@/util/auth";
+import { config } from "@/config";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -16,7 +17,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Casulsulvania",
+  title: "Casulsulvania" + (config.env === "development" ? " [DEV]" : ""),
 };
 
 export default async function RootLayout({

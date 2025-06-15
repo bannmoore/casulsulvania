@@ -34,11 +34,14 @@ class StorageClient {
     const arrayBuffer = await file.arrayBuffer();
     const fileContent = Buffer.from(arrayBuffer);
 
+    const path = `sims/${filename}`;
+    const pathWithEnv = config.env === "development" ? `DEV-${path}` : path;
+
     return new Promise((resolve, reject) =>
       this._s3Client.putObject(
         {
           Bucket: this._bucketName,
-          Key: `sims/${filename}`,
+          Key: pathWithEnv,
           Body: fileContent,
           ACL: "public-read",
         },
@@ -48,7 +51,7 @@ class StorageClient {
           }
 
           resolve(
-            `https://${this._bucketName}.${this._endpoint}/sims/${filename}`
+            `https://${this._bucketName}.${this._endpoint}/${pathWithEnv}`
           );
         }
       )
