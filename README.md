@@ -27,6 +27,7 @@ Create migration:
 
 ```sh
 ./bin/migrate create new_migration_name sql
+./bin/migrate.sh fix
 ```
 
 ## Populating local from cas_db.dump
