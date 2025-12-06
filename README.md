@@ -21,7 +21,7 @@ brew bundle
 # casulsulvania-db
 brew bundle
 
-./bin/migrate
+./bin/migrate.sh
 ```
 
 ## Deploy
@@ -97,7 +97,21 @@ This will produce a local `.dump` file, which can be copied into the `casulsulva
 ./bin/jump/connect_and_dump.sh
 ```
 
+To restore a dump file present on the server:
+
+```sh
+cd /mnt/cas_jump_server_volume
+source .env
+psql "$DATABASE_URL" < cas_db.dump
+```
+
 ## Gotchas
+
+### ./bin/deploy/app.sh fails: Error: Unable to use supplied token to access API: GET https://cloud.digitalocean.com/v1/oauth/token/info: 401 (request "###") Unable to authenticate you
+
+```sh
+doctl auth init --access-token $DO_TOKEN
+```
 
 ### DigitalOcean expects the amd64 platform
 
