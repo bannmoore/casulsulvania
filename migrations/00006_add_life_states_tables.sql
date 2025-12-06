@@ -17,8 +17,8 @@ CREATE TABLE life_states(
 );
 
 INSERT INTO life_states(id, name)
-        VALUES
-                --
+VALUES
+        --
 ('normal', 'Sim'),
 ('alien', 'Alien'),
 ('ghost', 'Ghost'),
@@ -27,7 +27,7 @@ INSERT INTO life_states(id, name)
 ('spellcaster', 'Spellcaster'),
 ('vampire', 'Vampire'),
 ('werewolf', 'Werewolf')
-                --
+        --
 ;
 
 -- +goose StatementEnd
