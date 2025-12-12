@@ -15,6 +15,7 @@ import {
   TraitId,
 } from "@/clients/database";
 import MultiSelect from "@/components/ux/MultiSelect";
+import { getRandomIndex } from "@/util/random";
 
 export default function GenerateSimForm({
   careerBranches,
@@ -60,7 +61,7 @@ export default function GenerateSimForm({
 
   /* form state */
   function getRandomElement<T>(array: T[]): T {
-    return array[Math.floor(Math.random() * array.length)];
+    return array[getRandomIndex(array.length)];
   }
 
   function generateRandomSim() {
