@@ -19,7 +19,7 @@ import {
   Trait,
   TraitId,
 } from "@/clients/database";
-import { updateSim } from "./actions";
+import { deleteSim, updateSim } from "./actions";
 import MultiSelect from "@/components/ux/MultiSelect";
 import FileUpload from "@/components/ux/FileUpload";
 import Image from "next/image";
@@ -82,6 +82,7 @@ export default function AddSimForm({
 
   const [isDeceased, setIsDeceased] = useState(sim.isDeceased);
   const [isAbstract, setIsAbstract] = useState(sim.isAbstract);
+
   /* traits */
 
   const [infantTraitId, setInfantTraitId] = useState<TraitId | undefined>(
@@ -208,6 +209,10 @@ export default function AddSimForm({
         setError(message);
       })
       .finally(() => setLoading(false));
+  }
+
+  async function handleDelete() {
+    await deleteSim(sim.id);
   }
 
   return (
@@ -462,9 +467,13 @@ export default function AddSimForm({
           />
         </div>
 
-        <div>
+        <div className="flex justify-between">
           <button type="submit" disabled={isLoading}>
             Save
+          </button>
+
+          <button type="button" disabled={isLoading} onClick={handleDelete}>
+            Delete
           </button>
         </div>
       </form>

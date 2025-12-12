@@ -217,6 +217,10 @@ class DatabaseClient {
       .execute();
   }
 
+  async deleteSim(id: string): Promise<void> {
+    await this._db.deleteFrom("sims").where("id", "=", id).execute();
+  }
+
   /* sims_aspirations */
 
   async getSimAspirations(simId: string): Promise<SimAspiration[]> {

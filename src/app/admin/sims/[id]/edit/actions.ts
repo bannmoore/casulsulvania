@@ -9,6 +9,7 @@ import database, {
 } from "@/clients/database";
 import storage from "@/clients/storage";
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 export async function updateSim(
   id: string,
@@ -70,4 +71,14 @@ export async function updateSim(
   await database.insertSimCareerBranches(id, careerBranches);
 
   revalidatePath(`admin/sims/${id}/edit`, "page");
+}
+
+export async function deleteSim(id: string) {
+  await database.deleteSim(id);
+
+  const query = new URLSearchParams({
+    success: "Sim deleted successfully",
+  });
+
+  redirect(`/admin/sims?${query.toString()}`);
 }

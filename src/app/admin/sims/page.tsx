@@ -1,8 +1,13 @@
 import database from "@/clients/database";
 import Link from "next/link";
 
-export default async function Page() {
+export default async function Page({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
   const sims = await database.getAllSims();
+  const successMessage = (await searchParams).success;
 
   return (
     <div>
@@ -10,6 +15,11 @@ export default async function Page() {
       <Link href="/admin/sims/new" className="block mb-4">
         Add Sim
       </Link>
+
+      {successMessage && (
+        <div className="alert alert-success mb-4">{successMessage}</div>
+      )}
+
       {!sims.length && <div>None found.</div>}
       {!!sims.length && (
         <ul className="grid grid-cols-4 gap-4">
