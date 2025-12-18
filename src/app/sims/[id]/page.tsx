@@ -1,6 +1,8 @@
 import database from "@/clients/database";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import ViewSim from "./ViewSim";
+import storage from "@/clients/storage";
 
 export default async function Page({
   params,
@@ -10,9 +12,13 @@ export default async function Page({
   const id = (await params).id;
 
   const sim = await database.getSimById(id);
-  const simAspirations = await database.getSimAspirations(id);
   const simTraits = await database.getSimTraits(id);
-  const simCareerBranches = await database.getSimCareerBranches(id);
+  const simImages = await database.getSimImages(id);
+
+  const simTraitsWithImages = simTraits.map((trait) => ({
+    ...trait,
+    imageSrc: storage.getTraitImage(trait.traitId),
+  }));
 
   if (!sim) {
     return notFound();
@@ -20,28 +26,15 @@ export default async function Page({
 
   return (
     <>
-      <h1>
-        {sim.firstName} {sim.lastName}
-      </h1>
       <div className="mb-4">
         <Link href="/">Back</Link>
       </div>
 
-      <div>
-        <p>{sim.ageId}</p>
-        <p>{sim.lifeStateId}</p>
-        <p>{simTraits.map((trait) => trait.traitId).join(", ")}</p>
-        <p>
-          {simAspirations
-            .map((aspiration) => aspiration.aspirationId)
-            .join(", ")}
-        </p>
-        <p>
-          {simCareerBranches
-            .map((careerBranch) => careerBranch.careerBranchId)
-            .join(", ")}
-        </p>
-      </div>
+      <ViewSim
+        sim={sim}
+        simTraits={simTraitsWithImages}
+        simImages={simImages}
+      />
     </>
   );
 }
