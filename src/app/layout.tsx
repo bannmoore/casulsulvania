@@ -5,6 +5,7 @@ import Link from "next/link";
 import { logout } from "./actions";
 import { getSessionUser } from "@/util/auth";
 import { config } from "@/config";
+import type { Viewport } from "next";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -18,6 +19,11 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Casulsulvania" + (config.env === "development" ? " [DEV]" : ""),
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1.0,
 };
 
 export default async function RootLayout({

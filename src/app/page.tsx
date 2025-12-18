@@ -18,7 +18,7 @@ export default async function Page() {
       </div>
       {!sims.length && <div>None found.</div>}
       {!!sims.length && (
-        <ul className="grid grid-cols-4 gap-4">
+        <ul className="md:grid md:grid-cols-2 lg:grid-cols-4 gap-4">
           {sims.map((sim) => (
             <li key={sim.id}>
               <Link
