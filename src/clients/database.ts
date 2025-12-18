@@ -375,15 +375,12 @@ class DatabaseClient {
   }
 
   async getAspirations(age: AgeId): Promise<Aspiration[]> {
-    return (
-      this._db
-        .selectFrom("aspirations")
-        .selectAll()
-        // @ts-expect-error: https://github.com/kysely-org/kysely/pull/612
-        .where((eb) => eb(eb.val(age), "=", eb.fn.any("aspirations.ages")))
-        .orderBy("name asc")
-        .execute()
-    );
+    return this._db
+      .selectFrom("aspirations")
+      .selectAll()
+      .where((eb) => eb(eb.val(age), "=", eb.fn.any("aspirations.ages")))
+      .orderBy("name asc")
+      .execute();
   }
 
   async getAspirationsByCategory(
@@ -398,15 +395,12 @@ class DatabaseClient {
   }
 
   async getTraits(age: AgeId): Promise<Trait[]> {
-    return (
-      this._db
-        .selectFrom("traits")
-        .selectAll()
-        // @ts-expect-error: https://github.com/kysely-org/kysely/pull/612
-        .where((eb) => eb(eb.val(age), "=", eb.fn.any("traits.ages")))
-        .orderBy("name asc")
-        .execute()
-    );
+    return this._db
+      .selectFrom("traits")
+      .selectAll()
+      .where((eb) => eb(eb.val(age), "=", eb.fn.any("traits.ages")))
+      .orderBy("name asc")
+      .execute();
   }
 
   async getTraitConflicts() {

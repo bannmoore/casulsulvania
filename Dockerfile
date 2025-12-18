@@ -3,7 +3,7 @@
 
 # TODO: https://docs.docker.com/reference/build-checks/from-platform-flag-const-disallowed/
 # FROM node:18-alpine AS base
-FROM --platform=linux/amd64 node:18-alpine AS base
+FROM --platform=linux/amd64 node:22-alpine AS base
 
 # Install dependencies only when needed
 FROM base AS deps
