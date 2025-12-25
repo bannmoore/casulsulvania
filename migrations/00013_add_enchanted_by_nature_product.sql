@@ -60,22 +60,22 @@ VALUES
 -- +goose StatementEnd
 -- +goose Down
 -- +goose StatementBegin
-DELETE FROM products
-WHERE id = 'enchanted_by_nature';
-
-DELETE FROM aspirations
+DELETE FROM career_branches
 WHERE product = 'enchanted_by_nature';
 
-DELETE FROM traits
+DELETE FROM careers
 WHERE product = 'enchanted_by_nature';
 
 DELETE FROM life_states
 WHERE id = 'fairy';
 
-DELETE FROM careers
+DELETE FROM traits
 WHERE product = 'enchanted_by_nature';
 
-DELETE FROM career_branches
+DELETE FROM aspirations
 WHERE product = 'enchanted_by_nature';
+
+DELETE FROM products
+WHERE id = 'enchanted_by_nature';
 
 -- +goose StatementEnd
