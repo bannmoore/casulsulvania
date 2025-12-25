@@ -114,8 +114,8 @@ export interface Sims {
   firstName: string;
   galleryId: string | null;
   id: Generated<Int8>;
-  isAbstract: Generated<boolean>;
   isDeceased: Generated<boolean>;
+  isUnplayed: Generated<boolean>;
   lastName: string;
   lifeStateId: Generated<LifeStateId>;
   name: Generated<string>;

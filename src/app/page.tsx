@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default async function Page() {
   const allSims = await database.getAllSims();
-  const sims = allSims.filter((sim) => !sim.isAbstract && !sim.isDeceased);
+  const sims = allSims.filter((sim) => !sim.isUnplayed && !sim.isDeceased);
 
   return (
     <div>

@@ -81,7 +81,7 @@ export default function AddSimForm({
   );
 
   const [isDeceased, setIsDeceased] = useState(sim.isDeceased);
-  const [isAbstract, setIsAbstract] = useState(sim.isAbstract);
+  const [isUnplayed, setIsAbstract] = useState(sim.isUnplayed);
 
   /* traits */
 
@@ -173,7 +173,7 @@ export default function AddSimForm({
       parent2Id,
       lifeStateId,
       isDeceased,
-      isAbstract,
+      isUnplayed,
       aspirations: new Array<
         { ageId: AgeId; aspirationId: AspirationId } | undefined
       >(
@@ -337,12 +337,12 @@ export default function AddSimForm({
           <label className="checkbox">
             <input
               type="checkbox"
-              checked={isAbstract}
+              checked={isUnplayed}
               onChange={(event: ChangeEvent<HTMLInputElement>) =>
                 setIsAbstract(event.currentTarget.checked)
               }
             />
-            <span>Abstract</span>
+            <span>Unplayed</span>
           </label>
         </div>
 

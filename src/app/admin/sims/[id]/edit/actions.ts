@@ -25,7 +25,7 @@ export async function updateSim(
     traits,
     careerBranches,
     isDeceased,
-    isAbstract,
+    isUnplayed,
   }: {
     imageFile: File | undefined;
     firstName: string;
@@ -38,7 +38,7 @@ export async function updateSim(
     traits: { traitId: TraitId; ageId: AgeId }[];
     careerBranches: CareerBranchId[];
     isDeceased: boolean;
-    isAbstract: boolean;
+    isUnplayed: boolean;
   }
 ) {
   let imageUri;
@@ -58,7 +58,7 @@ export async function updateSim(
     parent1Id: parent1Id ?? null,
     parent2Id: parent2Id ?? null,
     isDeceased,
-    isAbstract,
+    isUnplayed,
   });
 
   await database.clearSimAspirations(id);
