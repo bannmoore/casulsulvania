@@ -55,7 +55,7 @@ INSERT INTO career_branches(id, career_id, name, product, description)
 VALUES
   --
 ('naturopath_apothecurist', 'naturopath', 'Naturopath - Apothe-curist', 'enchanted_by_nature', 'If you have embraced the art of Crafting Elixirs, the Apothe-curist track will feel like home. You will need to master your craft as you continue helping others.'),
-('naturopath_lifestyle_coach', 'naturopath', 'Astronaut - Lifestyle Coach', 'enchanted_by_nature', 'Make a difference in Sims'' lives by centering fitness and nourishment, along with an emphasis on nature. Let the Lifestyle Coaching track guide you on your journey!');
+('naturopath_lifestyle_coach', 'naturopath', 'Naturopath - Lifestyle Coach', 'enchanted_by_nature', 'Make a difference in Sims'' lives by centering fitness and nourishment, along with an emphasis on nature. Let the Lifestyle Coaching track guide you on your journey!');
 
 -- +goose StatementEnd
 -- +goose Down
