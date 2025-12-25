@@ -21,6 +21,7 @@ export async function updateSim(
     lifeStateId,
     parent1Id,
     parent2Id,
+    lifeStory,
     aspirations,
     traits,
     careerBranches,
@@ -34,6 +35,7 @@ export async function updateSim(
     lifeStateId: LifeStateId;
     parent1Id: string | undefined;
     parent2Id: string | undefined;
+    lifeStory: string | null;
     aspirations: { aspirationId: AspirationId; ageId: AgeId }[];
     traits: { traitId: TraitId; ageId: AgeId }[];
     careerBranches: CareerBranchId[];
@@ -57,6 +59,7 @@ export async function updateSim(
     lifeStateId,
     parent1Id: parent1Id ?? null,
     parent2Id: parent2Id ?? null,
+    lifeStory,
     isDeceased,
     isUnplayed,
   });

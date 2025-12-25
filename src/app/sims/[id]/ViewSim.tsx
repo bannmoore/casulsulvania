@@ -48,6 +48,8 @@ export default function ViewSim({ sim, simTraits, simImages }: ViewSimProps) {
           />
         ))}
       </div>
+
+      {sim.lifeStory && <div>{sim.lifeStory}</div>}
     </div>
   );
 }

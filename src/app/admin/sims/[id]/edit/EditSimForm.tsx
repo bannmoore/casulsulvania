@@ -79,6 +79,7 @@ export default function AddSimForm({
   const [parent2Id, setParent2Id] = useState<string | undefined>(
     sim.parent2Id ?? undefined
   );
+  const [lifeStory, setLifeStory] = useState(sim.lifeStory);
 
   const [isDeceased, setIsDeceased] = useState(sim.isDeceased);
   const [isUnplayed, setIsAbstract] = useState(sim.isUnplayed);
@@ -171,6 +172,7 @@ export default function AddSimForm({
       ageId,
       parent1Id,
       parent2Id,
+      lifeStory,
       lifeStateId,
       isDeceased,
       isUnplayed,
@@ -464,6 +466,17 @@ export default function AddSimForm({
             options={careerBranches}
             placeholder="Choose careers"
             isSearchable={true}
+          />
+        </div>
+
+        <div className="mb-4">
+          <label htmlFor="life_story">Life Story</label>
+          <textarea
+            id="life_story"
+            name="life_story"
+            rows={10}
+            value={lifeStory ?? ""}
+            onChange={(event) => setLifeStory(event.target.value)}
           />
         </div>
 

@@ -118,6 +118,7 @@ export interface Sims {
   isUnplayed: Generated<boolean>;
   lastName: string;
   lifeStateId: Generated<LifeStateId>;
+  lifeStory: string | null;
   name: Generated<string>;
   parent1Id: Int8 | null;
   parent2Id: Int8 | null;
