@@ -66,6 +66,18 @@ class StorageClient {
     );
   }
 
+  async deleteSimImage(uri: string) {
+    const key = uri.replace(
+      `https://${this._bucketName}.${this._endpoint}/`,
+      ""
+    );
+
+    this._s3Client.deleteObject({
+      Bucket: this._bucketName,
+      Key: key,
+    });
+  }
+
   private _getPathWithEnv(path: string) {
     return config.env === "development" ? `DEV-${path}` : path;
   }

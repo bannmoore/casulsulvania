@@ -73,8 +73,11 @@ export async function updateSim(
   revalidatePath(`admin/sims/${id}/edit`, "page");
 }
 
-export async function deleteSim(id: string) {
-  await database.deleteSim(id);
+export async function deleteSim(simId: string) {
+  const images = await database.getSimImages(simId);
+  await images.map((image) => storage.deleteSimImage(image.imageUri));
+
+  await database.deleteSim(simId);
 
   const query = new URLSearchParams({
     success: "Sim deleted successfully",
