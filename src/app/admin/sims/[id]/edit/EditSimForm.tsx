@@ -125,11 +125,10 @@ export default function AddSimForm({
       ?.aspirationId
   );
 
-  const [adultAspirationId, setAdultAspirationId] = useState<
-    AspirationId | undefined
-  >(
-    simAspirations.find((aspiration) => aspiration.ageId === "young_adult")
-      ?.aspirationId
+  const [adultAspirationIds, setAdultAspirationIds] = useState<AspirationId[]>(
+    simAspirations
+      .filter((aspiration) => aspiration.ageId === "young_adult")
+      .map((aspiration) => aspiration.aspirationId)
   );
 
   /* career branches */
@@ -205,10 +204,10 @@ export default function AddSimForm({
           ageId: "teen",
           aspirationId: teenAspirationId,
         },
-        adultAspirationId && {
-          ageId: "young_adult",
-          aspirationId: adultAspirationId,
-        }
+        ...adultAspirationIds.map((aspirationId) => ({
+          ageId: "young_adult" as AgeId,
+          aspirationId: aspirationId,
+        }))
       ).filter((x) => !!x),
       traits: new Array<{ ageId: AgeId; traitId: TraitId } | undefined>(
         infantTraitId && { ageId: "infant", traitId: infantTraitId },
@@ -467,12 +466,12 @@ export default function AddSimForm({
         </div>
 
         <div className="mb-4">
-          <SingleSelect
+          <MultiSelect
             name="adultAspiration"
-            value={adultAspirationId}
-            onChange={(newValue) => setAdultAspirationId(newValue)}
+            value={adultAspirationIds}
+            onChange={(newValue) => setAdultAspirationIds(newValue)}
             options={adultAspirations}
-            placeholder="Choose adult aspiration"
+            placeholder="Choose adult aspirations"
             isSearchable={true}
           />
         </div>
