@@ -37,6 +37,8 @@ export type ProductId = "adventure_awaits" | "artist_studio" | "backyard" | "bas
 
 export type ProductType = "base_game" | "event" | "expansion_pack" | "game_pack" | "kit" | "stuff_pack";
 
+export type RelationshipTypeId = "romantic_partner" | "spouse" | "woohoo_partner";
+
 export type Timestamp = ColumnType<Date, Date | string, Date | string>;
 
 export type TraitId = "active" | "adventurous" | "ambitious" | "angelic" | "animal_enthusiast" | "art_lover" | "bookworm" | "bro" | "calm" | "cat_lover" | "cautious" | "charmer" | "chased_by_death" | "cheerful" | "child_of_the_islands" | "child_of_the_ocean" | "child_of_the_village" | "childish" | "clingy" | "clumsy" | "competitive" | "creative" | "cringe" | "dance_machine" | "disruptive" | "dog_lover" | "erratic" | "evil" | "family_oriented" | "foodie" | "freegan" | "fussy" | "geek" | "generous" | "genius" | "gloomy" | "glutton" | "good" | "goofball" | "green_fiend" | "grouch" | "hates_children" | "high_maintenance" | "horse_lover" | "hot_headed" | "idealist" | "independent" | "inquisitive" | "insider" | "intense" | "jealous" | "kleptomaniac" | "lactose_intolerant" | "lazy" | "loner" | "lovebug" | "loves_outdoors" | "loyal" | "macabre" | "maker" | "materialistic" | "mean" | "music_lover" | "mystical" | "neat" | "noncommittal" | "nosy" | "outgoing" | "overachiever" | "paranoid" | "party_animal" | "perfectionist" | "plant_lover" | "practice_makes_perfect" | "proper" | "rancher" | "recycle_disciple" | "romantic" | "romantically_reserved" | "self_absorbed" | "self_assured" | "sensitive" | "shady" | "silly" | "skeptical" | "slob" | "snob" | "socially_awkward" | "squeamish" | "sunny" | "unflirty" | "vegetarian" | "wiggly" | "wild" | "wise";
@@ -100,6 +102,11 @@ export interface Products {
   type: ProductType;
 }
 
+export interface RelationshipTypes {
+  id: RelationshipTypeId;
+  name: string;
+}
+
 export interface Sessions {
   createdAt: Generated<Timestamp>;
   expiresAt: Timestamp;
@@ -145,6 +152,12 @@ export interface SimsImages {
   updatedAt: Generated<Timestamp>;
 }
 
+export interface SimsRelationships {
+  relationshipTypeId: RelationshipTypeId;
+  sourceSimId: Int8;
+  targetSimId: Int8;
+}
+
 export interface SimsTraits {
   ageId: AgeId;
   simId: Int8;
@@ -182,11 +195,13 @@ export interface DB {
   lifeStates: LifeStates;
   otps: Otps;
   products: Products;
+  relationshipTypes: RelationshipTypes;
   sessions: Sessions;
   sims: Sims;
   simsAspirations: SimsAspirations;
   simsCareerBranches: SimsCareerBranches;
   simsImages: SimsImages;
+  simsRelationships: SimsRelationships;
   simsTraits: SimsTraits;
   traitConflicts: TraitConflicts;
   traits: Traits;

@@ -12,6 +12,7 @@ export default async function Page({
   const ages = await database.getAges();
   const lifeStates = await database.getLifeStates();
   const careerBranches = await database.getCareerBranches();
+  const relationshipTypes = await database.getRelationshipTypes();
   const infantTraits = await database.getTraits("infant");
   const toddlerTraits = await database.getTraits("toddler");
   const childTraits = await database.getTraits("child");
@@ -25,6 +26,7 @@ export default async function Page({
   const simTraits = await database.getSimTraits(id);
   const simCareerBranches = await database.getSimCareerBranches(id);
   const simImages = await database.getSimImages(id);
+  const simRelationships = await database.getSimRelationships(id);
 
   const sims = await database.getAllSims();
 
@@ -45,6 +47,7 @@ export default async function Page({
         ages={ages}
         lifeStates={lifeStates}
         careerBranches={careerBranches}
+        relationshipTypes={relationshipTypes}
         childAspirations={childAspirations}
         teenAspirations={teenAspirations}
         adultAspirations={adultAspirations}
@@ -58,6 +61,7 @@ export default async function Page({
         simTraits={simTraits}
         simCareerBranches={simCareerBranches}
         simImages={simImages}
+        simRelationships={simRelationships}
       />
     </>
   );

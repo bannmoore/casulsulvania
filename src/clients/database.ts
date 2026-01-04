@@ -22,6 +22,8 @@ import {
   CareerBranchId,
   SimsImages,
   TraitConflicts,
+  SimsRelationships,
+  RelationshipTypes,
 } from "./db";
 import { Pool } from "pg";
 import { parse } from "pg-connection-string";
@@ -40,6 +42,7 @@ export type Age = Selectable<Ages>;
 export type Aspiration = Selectable<Aspirations>;
 export type CareerBranch = Selectable<CareerBranches>;
 export type LifeState = Selectable<LifeStates>;
+export type RelationshipType = Selectable<RelationshipTypes>;
 export type Otp = Selectable<Otps>;
 export type Product = Selectable<Products>;
 export type Session = Selectable<Sessions>;
@@ -50,6 +53,7 @@ export type SimAspiration = Selectable<SimsAspirations>;
 export type SimCareerBranch = Selectable<SimsCareerBranches>;
 export type SimTrait = Selectable<SimsTraits>;
 export type SimImage = Selectable<SimsImages>;
+export type SimRelationship = Selectable<SimsRelationships>;
 export type Trait = Selectable<Traits>;
 export type TraitConflict = Selectable<TraitConflicts>;
 export type User = Selectable<Users>;
@@ -364,6 +368,49 @@ class DatabaseClient {
       .execute();
   }
 
+  /* sims_relationships */
+  async getSimRelationships(simId: string): Promise<SimRelationship[]> {
+    return this._db
+      .selectFrom("simsRelationships")
+      .selectAll("simsRelationships")
+      .where((eb) =>
+        eb("sourceSimId", "=", simId).or("targetSimId", "=", simId)
+      )
+      .execute();
+  }
+
+  async clearSimRelationships(simId: string): Promise<void> {
+    await this._db
+      .deleteFrom("simsRelationships")
+      .where((eb) =>
+        eb("sourceSimId", "=", simId).or("targetSimId", "=", simId)
+      )
+      .execute();
+  }
+
+  async insertSimRelationships(
+    relationships: SimRelationship[]
+  ): Promise<void> {
+    if (!relationships.length) {
+      return;
+    }
+
+    const mappedArray = relationships.map((rel) => {
+      const reverse = Number(rel.targetSimId) < Number(rel.sourceSimId);
+
+      return {
+        sourceSimId: reverse ? rel.targetSimId : rel.sourceSimId,
+        targetSimId: reverse ? rel.sourceSimId : rel.targetSimId,
+        relationshipTypeId: rel.relationshipTypeId,
+      };
+    });
+
+    await this._db
+      .insertInto("simsRelationships")
+      .values(mappedArray)
+      .execute();
+  }
+
   /* data */
 
   async getAges(): Promise<Age[]> {
@@ -409,6 +456,10 @@ class DatabaseClient {
 
   async getCareerBranches(): Promise<CareerBranch[]> {
     return this._db.selectFrom("careerBranches").selectAll().execute();
+  }
+
+  async getRelationshipTypes(): Promise<RelationshipType[]> {
+    return this._db.selectFrom("relationshipTypes").selectAll().execute();
   }
 }
 

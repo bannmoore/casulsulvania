@@ -11,10 +11,12 @@ import {
   CareerBranchId,
   LifeState,
   LifeStateId,
+  RelationshipType,
   Sim,
   SimAspiration,
   SimCareerBranch,
   SimImage,
+  SimRelationship,
   SimTrait,
   Trait,
   TraitId,
@@ -23,11 +25,13 @@ import { deleteSim, updateSim } from "./actions";
 import MultiSelect from "@/components/ux/MultiSelect";
 import FileUpload from "@/components/ux/FileUpload";
 import Image from "next/image";
+import RelationshipField from "./RelationshipField";
 
 export default function AddSimForm({
   ages,
   lifeStates,
   careerBranches,
+  relationshipTypes,
   sims,
   infantTraits,
   toddlerTraits,
@@ -42,10 +46,12 @@ export default function AddSimForm({
   simTraits,
   simCareerBranches,
   simImages,
+  simRelationships,
 }: {
   ages: Age[];
   lifeStates: LifeState[];
   careerBranches: CareerBranch[];
+  relationshipTypes: RelationshipType[];
   sims: Sim[];
   infantTraits: Trait[];
   toddlerTraits: Trait[];
@@ -60,6 +66,7 @@ export default function AddSimForm({
   simTraits: SimTrait[];
   simCareerBranches: SimCareerBranch[];
   simImages: SimImage[];
+  simRelationships: SimRelationship[];
 }) {
   const [currentSimImageUri] = useState(
     simImages.find((image) => image.ageId === sim.ageId)?.imageUri
@@ -128,6 +135,17 @@ export default function AddSimForm({
   /* career branches */
   const [careerBranchIds, setCareerBranchIds] = useState<CareerBranchId[]>(
     simCareerBranches.map(({ careerBranchId }) => careerBranchId)
+  );
+
+  /* relationships */
+  const [relationships, setRelationships] = useState<SimRelationship[]>(
+    simRelationships.map(
+      ({ sourceSimId, targetSimId, relationshipTypeId }) => ({
+        sourceSimId: sim.id,
+        targetSimId: sourceSimId === sim.id ? targetSimId : sourceSimId,
+        relationshipTypeId,
+      })
+    )
   );
 
   /* form state */
@@ -200,6 +218,7 @@ export default function AddSimForm({
         adultTraitId && { ageId: "young_adult", traitId: adultTraitId }
       ).filter((x) => !!x),
       careerBranches: careerBranchIds,
+      relationships: relationships,
     })
       .then(() => setIsSuccessful(true))
       .catch((err) => {
@@ -466,6 +485,18 @@ export default function AddSimForm({
             options={careerBranches}
             placeholder="Choose careers"
             isSearchable={true}
+          />
+        </div>
+
+        <div className="mb-4">
+          <div>Relationships</div>
+
+          <RelationshipField
+            simId={sim.id}
+            value={relationships}
+            onChange={setRelationships}
+            sims={sims}
+            relationshipTypes={relationshipTypes}
           />
         </div>
 

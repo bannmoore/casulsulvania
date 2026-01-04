@@ -5,6 +5,7 @@ import database, {
   AspirationId,
   CareerBranchId,
   LifeStateId,
+  SimRelationship,
   TraitId,
 } from "@/clients/database";
 import storage from "@/clients/storage";
@@ -25,6 +26,7 @@ export async function updateSim(
     aspirations,
     traits,
     careerBranches,
+    relationships,
     isDeceased,
     isUnplayed,
   }: {
@@ -39,6 +41,7 @@ export async function updateSim(
     aspirations: { aspirationId: AspirationId; ageId: AgeId }[];
     traits: { traitId: TraitId; ageId: AgeId }[];
     careerBranches: CareerBranchId[];
+    relationships: SimRelationship[];
     isDeceased: boolean;
     isUnplayed: boolean;
   }
@@ -72,6 +75,9 @@ export async function updateSim(
 
   await database.clearSimCareerBranches(id);
   await database.insertSimCareerBranches(id, careerBranches);
+
+  await database.clearSimRelationships(id);
+  await database.insertSimRelationships(relationships);
 
   revalidatePath(`admin/sims/${id}/edit`, "page");
 }
