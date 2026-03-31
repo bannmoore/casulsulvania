@@ -27,7 +27,7 @@ import FileUpload from "@/components/ux/FileUpload";
 import Image from "next/image";
 import RelationshipField from "./RelationshipField";
 
-export default function AddSimForm({
+export default function EditSimForm({
   ages,
   lifeStates,
   careerBranches,
@@ -69,7 +69,7 @@ export default function AddSimForm({
   simRelationships: SimRelationship[];
 }) {
   const [currentSimImageUri] = useState(
-    simImages.find((image) => image.ageId === sim.ageId)?.imageUri
+    simImages.find((image) => image.ageId === sim.ageId)?.imageUri,
   );
   const [imageFile, setImageFile] = useState<File>();
   const [imagePreview, setImagePreview] = useState<string>();
@@ -78,13 +78,13 @@ export default function AddSimForm({
   const [lastName, setLastName] = useState(sim.lastName);
   const [ageId, setAgeId] = useState<AgeId | undefined>(sim.ageId);
   const [lifeStateId, setLifeStateId] = useState<LifeStateId | undefined>(
-    sim.lifeStateId
+    sim.lifeStateId,
   );
   const [parent1Id, setParent1Id] = useState<string | undefined>(
-    sim.parent1Id ?? undefined
+    sim.parent1Id ?? undefined,
   );
   const [parent2Id, setParent2Id] = useState<string | undefined>(
-    sim.parent2Id ?? undefined
+    sim.parent2Id ?? undefined,
   );
   const [lifeStory, setLifeStory] = useState(sim.lifeStory);
 
@@ -94,19 +94,19 @@ export default function AddSimForm({
   /* traits */
 
   const [infantTraitId, setInfantTraitId] = useState<TraitId | undefined>(
-    simTraits.find((trait) => trait.ageId === "infant")?.traitId
+    simTraits.find((trait) => trait.ageId === "infant")?.traitId,
   );
   const [toddlerTraitId, setToddlerTraitId] = useState<TraitId | undefined>(
-    simTraits.find((trait) => trait.ageId === "toddler")?.traitId
+    simTraits.find((trait) => trait.ageId === "toddler")?.traitId,
   );
   const [childTraitId, setChildTraitId] = useState<TraitId | undefined>(
-    simTraits.find((trait) => trait.ageId === "child")?.traitId
+    simTraits.find((trait) => trait.ageId === "child")?.traitId,
   );
   const [teenTraitId, setTeenTraitId] = useState<TraitId | undefined>(
-    simTraits.find((trait) => trait.ageId === "teen")?.traitId
+    simTraits.find((trait) => trait.ageId === "teen")?.traitId,
   );
   const [adultTraitId, setAdultTraitId] = useState<TraitId | undefined>(
-    simTraits.find((trait) => trait.ageId === "young_adult")?.traitId
+    simTraits.find((trait) => trait.ageId === "young_adult")?.traitId,
   );
 
   /* aspirations */
@@ -115,25 +115,25 @@ export default function AddSimForm({
     AspirationId | undefined
   >(
     simAspirations.find((aspiration) => aspiration.ageId === "child")
-      ?.aspirationId
+      ?.aspirationId,
   );
 
   const [teenAspirationId, setTeenAspirationId] = useState<
     AspirationId | undefined
   >(
     simAspirations.find((aspiration) => aspiration.ageId === "teen")
-      ?.aspirationId
+      ?.aspirationId,
   );
 
   const [adultAspirationIds, setAdultAspirationIds] = useState<AspirationId[]>(
     simAspirations
       .filter((aspiration) => aspiration.ageId === "young_adult")
-      .map((aspiration) => aspiration.aspirationId)
+      .map((aspiration) => aspiration.aspirationId),
   );
 
   /* career branches */
   const [careerBranchIds, setCareerBranchIds] = useState<CareerBranchId[]>(
-    simCareerBranches.map(({ careerBranchId }) => careerBranchId)
+    simCareerBranches.map(({ careerBranchId }) => careerBranchId),
   );
 
   /* relationships */
@@ -143,9 +143,10 @@ export default function AddSimForm({
         sourceSimId: sim.id,
         targetSimId: sourceSimId === sim.id ? targetSimId : sourceSimId,
         relationshipTypeId,
-      })
-    )
+      }),
+    ),
   );
+  console.log("BAM relationships", relationships);
 
   /* form state */
 
@@ -207,14 +208,14 @@ export default function AddSimForm({
         ...adultAspirationIds.map((aspirationId) => ({
           ageId: "young_adult" as AgeId,
           aspirationId: aspirationId,
-        }))
+        })),
       ).filter((x) => !!x),
       traits: new Array<{ ageId: AgeId; traitId: TraitId } | undefined>(
         infantTraitId && { ageId: "infant", traitId: infantTraitId },
         toddlerTraitId && { ageId: "toddler", traitId: toddlerTraitId },
         childTraitId && { ageId: "child", traitId: childTraitId },
         teenTraitId && { ageId: "teen", traitId: teenTraitId },
-        adultTraitId && { ageId: "young_adult", traitId: adultTraitId }
+        adultTraitId && { ageId: "young_adult", traitId: adultTraitId },
       ).filter((x) => !!x),
       careerBranches: careerBranchIds,
       relationships: relationships,

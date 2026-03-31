@@ -175,7 +175,7 @@ class DatabaseClient {
       .leftJoin("simsImages", (join) =>
         join
           .onRef("sims.id", "=", "simsImages.simId")
-          .onRef("simsImages.ageId", "=", "sims.ageId")
+          .onRef("simsImages.ageId", "=", "sims.ageId"),
       )
       .select("simsImages.imageUri")
       .orderBy("ages.id desc")
@@ -189,7 +189,7 @@ class DatabaseClient {
       .leftJoin("simsImages", (join) =>
         join
           .onRef("sims.id", "=", "simsImages.simId")
-          .onRef("simsImages.ageId", "=", "sims.ageId")
+          .onRef("simsImages.ageId", "=", "sims.ageId"),
       )
       .select(["simsImages.imageUri"])
       .where("id", "=", id)
@@ -209,7 +209,7 @@ class DatabaseClient {
 
   async updateSim(
     id: string,
-    updateData: Partial<Unsaved<Sim>>
+    updateData: Partial<Unsaved<Sim>>,
   ): Promise<void> {
     await this._db
       .updateTable("sims")
@@ -244,7 +244,7 @@ class DatabaseClient {
 
   async insertSimAspirations(
     simId: string,
-    aspirations: { aspirationId: AspirationId; ageId: AgeId }[]
+    aspirations: { aspirationId: AspirationId; ageId: AgeId }[],
   ): Promise<void> {
     if (!aspirations.length) {
       return;
@@ -258,7 +258,7 @@ class DatabaseClient {
           aspirationId,
           ageId,
           isComplete: false,
-        }))
+        })),
       )
       .execute();
   }
@@ -282,7 +282,7 @@ class DatabaseClient {
 
   async insertSimTraits(
     simId: string,
-    traits: { traitId: TraitId; ageId: AgeId }[]
+    traits: { traitId: TraitId; ageId: AgeId }[],
   ): Promise<void> {
     if (!traits.length) {
       return;
@@ -295,7 +295,7 @@ class DatabaseClient {
           simId,
           traitId,
           ageId,
-        }))
+        })),
       )
       .execute();
   }
@@ -319,7 +319,7 @@ class DatabaseClient {
 
   async insertSimCareerBranches(
     simId: string,
-    careerBranches: CareerBranchId[]
+    careerBranches: CareerBranchId[],
   ): Promise<void> {
     if (!careerBranches.length) {
       return;
@@ -331,7 +331,7 @@ class DatabaseClient {
         careerBranches.map((careerBranchId) => ({
           simId,
           careerBranchId,
-        }))
+        })),
       )
       .execute();
   }
@@ -348,7 +348,7 @@ class DatabaseClient {
   async upsertSimImage(
     simId: string,
     ageId: AgeId,
-    imageUri: string
+    imageUri: string,
   ): Promise<void> {
     await this._db
       .insertInto("simsImages")
@@ -363,7 +363,7 @@ class DatabaseClient {
           .column("simId")
           .column("ageId")
           .doUpdateSet({ imageUri, updatedAt: new Date() })
-          .where("simsImages.ageId", "=", ageId)
+          .where("simsImages.ageId", "=", ageId),
       )
       .execute();
   }
@@ -374,7 +374,7 @@ class DatabaseClient {
       .selectFrom("simsRelationships")
       .selectAll("simsRelationships")
       .where((eb) =>
-        eb("sourceSimId", "=", simId).or("targetSimId", "=", simId)
+        eb("sourceSimId", "=", simId).or("targetSimId", "=", simId),
       )
       .execute();
   }
@@ -383,13 +383,13 @@ class DatabaseClient {
     await this._db
       .deleteFrom("simsRelationships")
       .where((eb) =>
-        eb("sourceSimId", "=", simId).or("targetSimId", "=", simId)
+        eb("sourceSimId", "=", simId).or("targetSimId", "=", simId),
       )
       .execute();
   }
 
   async insertSimRelationships(
-    relationships: SimRelationship[]
+    relationships: SimRelationship[],
   ): Promise<void> {
     if (!relationships.length) {
       return;
@@ -431,7 +431,7 @@ class DatabaseClient {
   }
 
   async getAspirationsByCategory(
-    category: AspirationCategory
+    category: AspirationCategory,
   ): Promise<Aspiration[]> {
     return this._db
       .selectFrom("aspirations")
@@ -467,7 +467,7 @@ const database = Object.freeze(
   new DatabaseClient({
     connectionString: config.databaseUrl,
     cert: config.databaseCert,
-  })
+  }),
 );
 
 export default database;
