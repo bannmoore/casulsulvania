@@ -36,7 +36,7 @@ variable "jump_server_ssh_key" {
 variable "jump_server_ssh_key_path" {
   description = "Path to the public SSH key used to access the Jump Server"
   type        = string
-  default     = "~/.ssh/id_rsa_do"
+  default     = "~/.ssh/id_rsa_do_cas"
 }
 
 variable "jump_server_volume_name" {
