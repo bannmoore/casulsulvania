@@ -4,11 +4,6 @@
 
 - [Docker Desktop](https://docs.docker.com/desktop/)
 
-This project expects the following repos to be cloned into the same workspace:
-
-- `casulsulvania`
-- `casulsulvania-db`
-
 ## Quick Start
 
 ```sh
@@ -29,6 +24,7 @@ brew bundle
 ### Prerequisites
 
 This Terraform configuration expects the following resources to already exist:
+
 - A container app registry called "bam"
 - An API token
 - A Digital Ocean Spaces Access Key
@@ -69,11 +65,14 @@ cat ~/.ssh/id_rsa.pub
 
 # Clone database repo
 cd /mnt/cas_jump_server_volume
-git clone git@github.com:bannmoore/casulsulvania-db.git
-cd casulsulvania-db
+git clone --no-checkout https://github.com/bannmoore/casulsulvania
+cd casulsulvania
+git sparse-checkout init --cone
+git sparse-checkout set db
+cd db
 
 # Run migrations
-source ../.env
+source ../../.env
 ./bin/jump_setup.sh
 ./bin/migrate.sh
 ```
@@ -83,15 +82,15 @@ To run new migrations:
 ```sh
 ./bin/jump/connect.sh
 
-cd /mnt/cas_jump_server_volume/casulsulvania-db
+cd /mnt/cas_jump_server_volume/casulsulvania/db
 git pull
-source ../.env
+source ../../.env
 ./bin/migrate.sh
 ```
 
 ### Dump Remote Database
 
-This will produce a local `.dump` file, which can be copied into the `casulsulvania-db` repo to restore locally.
+This will produce a local `.dump` file, which can be restored locally.
 
 ```sh
 ./bin/jump/connect_and_dump.sh
@@ -118,7 +117,7 @@ doctl auth init --access-token $DO_TOKEN
 If the published image is built on the arm64 platform, it won't work on Digital Ocean. Check it like so:
 
 ```sh
-docker image ls | grep bam 
+docker image ls | grep bam
 docker inspect <IMAGE_ID> --format '{{.Architecture}}'
 ```
 
